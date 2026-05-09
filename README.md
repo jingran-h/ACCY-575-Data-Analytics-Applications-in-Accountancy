@@ -46,8 +46,8 @@ By the end of this course you will be able to:
 
 - **VS Code** (free)
 - **Python**, managed via **`uv`**
-- **Git** and a **GitHub** account (free for students via [GitHub Education](https://education.github.com/))
-- A coding agent: **GitHub Copilot** (free for students via GitHub Education), or an equivalent (Claude Code, Cursor)
+- **Git** and a **GitHub** account
+- A coding agent: **GitHub Copilot** (free for students via [GitHub Education](https://education.github.com/)), or an equivalent (Claude Code, Cursor, etc.)
 - **WRDS** account (provided through the College of Business; setup in Module 8)
 
 No prior VS Code or Git experience is required. Modules 1–4 cover both from scratch.
