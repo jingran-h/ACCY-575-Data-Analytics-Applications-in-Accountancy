@@ -24,7 +24,7 @@ In Module 2 you merged a branch directly with `git merge`. That's fine on a pers
 - **Automated checks.** Tests, linters, and CI run on the PR before merge — you see results before code lands in `main`.
 - **A record.** A year later, the PR description and comments tell you why a change was made.
 
-For accounting students: think of it as the "send a draft adjusting entry to your senior for review before posting" model — translated to code. Your manager will not trust code that hasn't been reviewed. In Part 2, your AI Collaboration Log + a PR description form the full evidence trail of how a piece of analytical work came to be.
+For accounting students: think of it as the "send a draft adjusting entry to your senior for review before posting" model — translated to code. Your manager will not trust code that hasn't been reviewed.
 
 ```bash
 cd ~/Projects/accy575/ACCY575-walkthrough

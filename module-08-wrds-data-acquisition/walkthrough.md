@@ -201,7 +201,7 @@ gh auth login
 
 If `gh` isn't installed yet (`command not found`), one line gets it: `conda install -c conda-forge gh -y`. Then re-run.
 
-Pick **GitHub.com → HTTPS → Login with a web browser**. Copy the one-time code, press Enter, the browser opens *on your laptop* and you authorize. This is the exact flow from [Module 2](../module-02/walkthrough.md) — same screens, same code-paste step.
+Pick **GitHub.com → HTTPS → Login with a web browser**. Copy the one-time code, press Enter, the browser opens *on your laptop* and you authorize. This is the exact flow from [Module 2](../module-02-git-fundamentals/walkthrough.md) — same screens, same code-paste step.
 
 ### 5c. Tell Git who you are (per-server)
 

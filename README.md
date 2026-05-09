@@ -100,26 +100,13 @@ Each Part 2 module produces a short write-up — what method, what question, wha
 
 | Criterion | Weight | What we are looking for |
 |-----------|--------|--------------------------|
-| Correctness and rigor of analysis | 40% | Is the question actually answered? Are conclusions supported by the data and the method? |
-| Code quality and reproducibility | 25% | Does the repo run on a clean environment? Is the structure clear? |
-| AI Collaboration Log quality | 25% | Does the log show genuine analytical judgment — not just acceptance of agent output? |
-| Presentation / communication | 10% | Is the write-up clear and appropriately concise? |
+| Correctness and rigor of analysis | 50% | Is the question actually answered? Are conclusions supported by the data and the method? |
+| Code quality and reproducibility | 30% | Does the repo run on a clean environment? Is the structure clear? |
+| Presentation / communication | 20% | Is the write-up clear and appropriately concise? |
 
 ### Part 3 — Cases
 
 *TBD.*
-
-### The AI Collaboration Log
-
-Every Part 2 submission includes a one-page log structured as four columns:
-
-| Brief | Agent Output | Your Edits | Why |
-|-------|--------------|------------|-----|
-| The spec you wrote — what you asked the agent to do, the data shape, the constraints | What the agent produced (paste or summarize concisely) | What you kept, changed, or rejected | The reasoning behind each change or rejection |
-
-Writing a clear **brief** is itself the skill being evaluated. In professional work you give specs to AI tools the same way you give them to a junior staff or contractor — the quality of what you get back is determined upstream, by what you ask for and how you frame it.
-
-This is not a compliance exercise. The log is the primary evidence of your analytical judgment. A submission whose log shows the student blindly accepted agent output will be graded accordingly, even if the underlying analysis happens to be correct.
 
 ---
 

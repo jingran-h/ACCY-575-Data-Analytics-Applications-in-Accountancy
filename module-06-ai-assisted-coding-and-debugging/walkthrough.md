@@ -51,7 +51,7 @@ Stay calibrated as model capability moves — what needed a careful brief in 202
 Why write briefs anyway, even for simple tasks?
 
 - **Reproducibility.** A clear brief gives consistent output across runs and across team members; a sloppy prompt is roulette.
-- **Audit trail.** In Part 2, your AI Collaboration Log records the brief verbatim — *"write code to analyze this CSV"* makes a poor defensible record.
+- **Audit trail.** A clear brief is the defensible record of what you asked for; a sloppy prompt makes a poor record. *"write code to analyze this CSV"* tells nobody what you actually intended.
 - **Briefs work for humans too.** The same brief you'd give Copilot is the same brief you'd give a junior staff member or a Big Four contractor. A vague prompt only the AI can interpret.
 
 The brief is a *judgment habit*, not a model-coaxing trick. Practice it for the audit and reproducibility reasons — even if frontier models no longer strictly need it for output quality.
