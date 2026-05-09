@@ -11,7 +11,6 @@
 | **Instructor** | *TBD* |
 | **Office hours** | *TBD* |
 | **Prerequisite** | ACCY 570 |
-| **Enrollment** | Restricted to MAS:Accountancy and MS:Accy (Cost Recovery) students pursuing the Data Analytics concentration |
 
 ---
 
@@ -32,7 +31,7 @@ By the end of this course you will be able to:
 
 - Set up a reproducible Python analytical project from scratch using modern tooling.
 - Use Git and GitHub to manage, share, and review analytical work in a team workflow.
-- Use AI coding assistants (Claude Code, GitHub Copilot) effectively — and critically evaluate their output rather than accepting it blindly.
+- Use AI coding assistants like GitHub Copilot effectively — and critically evaluate their output rather than accepting it blindly.
 - Validate analytical work for correctness and reproducibility — catch the failure mode where "code ran but the answer is wrong."
 - Translate business questions in accounting contexts into rigorous analyses, and communicate the results in a form a manager would actually read.
 
@@ -43,7 +42,7 @@ By the end of this course you will be able to:
 - **VS Code** (free)
 - **Python**, managed via **`uv`**
 - **Git** and a **GitHub** account (free for students via [GitHub Education](https://education.github.com/))
-- An AI coding assistant: **Claude Code** or **GitHub Copilot** (Copilot is free for students via GitHub Education)
+- An AI coding assistant: **GitHub Copilot** (free for students via GitHub Education)
 
 No prior VS Code or Git experience is required. Weeks 1–4 cover both from scratch.
 
@@ -53,20 +52,20 @@ No prior VS Code or Git experience is required. Weeks 1–4 cover both from scra
 
 ### Part 1 — The Modern Python Project Workflow
 
-| Week | Topic | Tools / Focus |
-|------|-------|---------------|
+| Week | Topic | Focus |
+|------|-------|-------|
 | 1 | Terminal/CLI fundamentals; VS Code setup; first Python project with `uv` | shell, VS Code, `uv` |
 | 2 | Git fundamentals: commits, branches, GitHub workflow | Git, GitHub |
-| 3 | Pull requests & code review; reading a real-world public repo | GitHub PRs |
-| 4 | Project structure & `pyproject.toml`; secrets (`.env`, `.gitignore`) and prompt-injection awareness | `uv`, `.env`, OWASP LLM Top 10 |
+| 3 | Pull requests & code review; pair-review a classmate's PR | GitHub PRs |
+| 4 | Project structure & `pyproject.toml`; secrets (`.env`, `.gitignore`); a real README | `uv`, `.env` |
 | 5 | Data validation & reproducibility: asserts, types, seeds, snapshot tests, `pandera` | `pandera`, `pytest` basics |
-| 6 | AI-assisted coding & debugging; Markdown `results.md` for communication | Claude Code / Copilot, VS Code debugger |
+| 6 | AI-assisted coding & debugging; prompt-injection awareness; Markdown `results.md` | GitHub Copilot, VS Code debugger, OWASP LLM Top 10 |
 | 7 | **Mini-project:** reproducible analysis repo (individual) | Full workflow |
 
 ### Part 2 — AI-Assisted Case Work
 
-| Week | Topic | Context |
-|------|-------|---------|
+| Week | Topic | Focus |
+|------|-------|-------|
 | 8–9 | **PCard** — procurement card transactions | Internal Audit |
 | 10 | **Differential Analyses** | Managerial Accounting |
 | 11 | **Databases** — SQL + Python | Data Engineering |
