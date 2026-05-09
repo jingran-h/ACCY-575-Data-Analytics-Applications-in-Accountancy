@@ -1,6 +1,6 @@
 # Module 2 — Git Fundamentals
 
-> **Hands-on:** [walkthrough.md](walkthrough.md) — step-by-step instructions for the module.
+> **Hands-on:** [walkthrough.md](walkthrough.md) — putting your project under version control, learning branches, and pushing to GitHub for the first time.
 
 ## Motivation
 

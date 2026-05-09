@@ -1,6 +1,6 @@
 # Module 4 — Project Structure and Secrets
 
-> **Hands-on:** [walkthrough.md](walkthrough.md) — step-by-step instructions for the module.
+> **Hands-on:** [walkthrough.md](walkthrough.md) — moving your project into a real layout, handling `.env` secrets, and writing a README that doesn't waste a reader's time.
 
 ## Motivation
 

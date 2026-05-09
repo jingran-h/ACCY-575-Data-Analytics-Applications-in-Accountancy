@@ -1,6 +1,6 @@
 # Module 6 — AI-Assisted Coding and Debugging
 
-> **Hands-on:** [walkthrough.md](walkthrough.md) — step-by-step instructions for the module.
+> **Hands-on:** [walkthrough.md](walkthrough.md) — setting up GitHub Copilot, writing your first brief, debugging AI-produced code, and recognizing prompt injection.
 
 ## Motivation
 

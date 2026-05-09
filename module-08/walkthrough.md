@@ -1,17 +1,8 @@
 # Module 8 — Walkthrough: WRDS Data Acquisition
 
-This is the foundation module for Part 2. By the end of it you will have:
-
-1. A brand-new GitHub repository, separate from your Part 1 project.
-2. A WRDS account with SSH access to the WRDS Cloud confirmed.
-3. A real research dataset pulled from Compustat (and a paired textual source), validated, and snapshotted into your local repo.
-4. A clean commit on `main` that Modules 9–14 will branch from.
-
-Plan on 3–5 hours. The first-time WRDS approval and SSH setup are the slowest parts; the actual data pull is fast once those work.
-
 ## 1. Stand up a new repo for Part 2
 
-Part 1's `ACCY575-walkthrough` was workflow practice on small data. Part 2 is real research data, multiple models, and a branch-per-module review workflow. Keeping them in separate repos avoids a tangled history and makes the Part 2 repo something you can actually point a recruiter at.
+Part 1's `ACCY575-walkthrough` was workflow practice on small data. Part 2 is research data, multiple models, and a branch-per-module review workflow. Keeping them in separate repos avoids a tangled history and gives you a Part 2 repo that's clean enough to point a recruiter at.
 
 Pick a name and create the local folder:
 
@@ -110,11 +101,11 @@ Within an hour of enrollment, log into the WRDS website and click into any data 
 >
 > A separate rule that *is* immediate-termination: **never share your WRDS credentials with anyone.** Each student has their own account through the class enrollment in §2.
 >
-> One more nuance: the underlying data vendors (Compustat, CRSP, IBES, etc.) each have their own redistribution clauses on top of the WRDS umbrella, and some are stricter than others about reposting raw extracts. When in doubt — and especially before pushing raw vendor data to a public repo — check the specific vendor's terms or ask the instructor. For this course, §11 covers what's safe to commit and what isn't, and you can follow that without reading every vendor license.
+> One more nuance: the underlying data vendors (Compustat, CRSP, IBES, etc.) each have their own redistribution clauses on top of the WRDS umbrella, and some are stricter than others about reposting raw extracts. When in doubt — and especially before pushing raw vendor data to a public repo — check the specific vendor's terms or ask the instructor. For this course, §10 covers what's safe to commit and what isn't, and you can follow that without reading every vendor license.
 
 ## 3. SSH into the WRDS Cloud (one time)
 
-**What is SSH?** Short for *Secure Shell* — it's the standard way to open an encrypted terminal session on a remote computer. You type commands locally; they execute on the server; you see the output as if the server were your own machine. SSH is how every cloud server and research compute cluster is accessed in 2026 — once you've done it once, you've done it everywhere. We'll authenticate with your WRDS password for the one-time look around below; SSH also supports a more elaborate keypair-based mode that you'd use for any sustained WRDS Cloud work, but that's a graduation step you don't need today.
+**What is SSH?** Short for *Secure Shell*. You open an encrypted terminal session on a remote computer; you type commands locally and they execute on the server. It's how every cloud server and research compute cluster is reached — once you've done it once, the pattern carries everywhere. For the one-time look around below we'll authenticate with your WRDS password. SSH also supports keypair-based authentication, which is what you'd use for any sustained WRDS Cloud work — but you don't need that today.
 
 The WRDS Cloud is a Linux compute environment Wharton hosts. For very large queries you want to run code there rather than pulling 50 GB to your laptop. We will mostly work locally in this course, but you should know what's on the other end of the wire — this is the literal "real research environment" your data is coming from.
 
@@ -162,7 +153,7 @@ exit
 
 That's the whole familiarization step. You've confirmed the account works and seen the shape of the filesystem on the other side. The next two sections set up the real remote dev workflow you'd use if you ever needed to *work* on the WRDS Cloud rather than just visit it.
 
-> **Why bother if we're not going to actually use the cloud?** Two reasons. First, when a real query is too big to pull (CRSP daily for 30 years is 50+ GB), you'll move the analysis here. Second, in a few professional contexts (regulatory filings, controlled-data audits) the data is *not allowed* to leave the host environment, and SSH-into-the-data is the only legal workflow. Knowing the option exists changes how you think about Part 3 cases.
+> **Why bother, if we're mostly going to work locally?** Some queries are too big to pull — CRSP daily for 30 years is 50+ GB — and you'll move the analysis to the cloud when that happens. In other contexts (regulatory filings, controlled-data audits) the data is *not allowed* to leave the host environment, and SSH-into-the-data is the only legal workflow. Knowing the option exists changes how you think about Part 3 cases.
 
 ## 4. Connect VS Code to the WRDS Cloud
 
@@ -190,7 +181,7 @@ Command Palette → **Remote-SSH: Connect to Host…** → pick `wrds-cloud.whar
 
 When the bottom-left corner shows a green badge reading **SSH: wrds-cloud.wharton.upenn.edu**, you're in. **File → Open Folder** → pick `/home/uiuc/<your-username>` (or any subdirectory). The file explorer now shows the remote filesystem. **Terminal → New Terminal** opens a shell on WRDS Cloud — every command runs there.
 
-> **Heads up.** Extensions you install in this remote window install onto WRDS Cloud's VS Code Server, not your local VS Code. Install the Python and Jupyter extensions on the remote when prompted; they're the ones you'll actually use here.
+Extensions you install in this remote window go onto WRDS Cloud's VS Code Server, not your local VS Code. Install the Python and Jupyter extensions on the remote when prompted — those are the ones you'll use here.
 
 ## 5. Connect GitHub from the WRDS Cloud
 
@@ -276,11 +267,11 @@ What you should see on a fresh `.pgpass`'d setup, the first time you run this fr
 
 After that, WRDS keeps your MFA session warm for ~30 days from the same IP — re-runs from the same network return instantly with no Duo prompt. From a different network (a coffee shop, a VPN switch), the Duo Push step comes back.
 
-> **Aside — `python -c "…"`.** The `-c` flag tells Python to run the string that follows as a complete program and exit, no file or REPL involved. It's the fastest way to execute one or two lines of Python without opening an editor or `python` shell — useful for sanity checks like this, for grabbing a quick value out of a Parquet file (you'll see this pattern again in §9), or for running anything you'd otherwise type into iPython once and never again. Statements in the string are separated by `;` since `-c` is one line; for anything multi-line, put the code in a `.py` file instead.
+> **Aside — `python -c "…"`.** The `-c` flag tells Python to run the string that follows as a complete program and exit, no file or REPL involved. It's the fastest way to execute one or two lines of Python without opening an editor or `python` shell — useful for sanity checks like this, for grabbing a quick value out of a Parquet file (you'll see this pattern again in §8a), or for running anything you'd otherwise type into iPython once and never again. Statements in the string are separated by `;` since `-c` is one line; for anything multi-line, put the code in a `.py` file instead.
 
-## 8. Brief the agent to write the pull
+## 8. Build the Part 2 dataset
 
-Now the actual work. Open your coding agent (Copilot Chat, Claude Code, Cursor — whichever you're using) and write briefs the way Module 6 trained you to: a clear spec is what gets you a clean result; a vague prompt is what gets you a confidently wrong one.
+Open your coding agent (Copilot Chat, Claude Code, Cursor — whichever you're using). Write briefs the way Module 6 trained you to: a clear spec gets you a clean result; a vague prompt gets you a confidently wrong one.
 
 The pull has **two parts that live in different places**:
 
@@ -310,63 +301,7 @@ What this brief gets right that a sloppy prompt wouldn't:
 - The link-history join (`ccmxpf_lnkhist`) with `linktype`/`linkprim` filters. Naive joins on `permno` or `cusip` produce duplicate-firm and history-misalignment bugs.
 - "Don't commit the parquet" — the agent will sometimes try to `git add` the data file. Stop it.
 
-Read the file the agent produces. Make sure it does what the brief said and nothing else.
-
-### 8b. MD&A text — *on the WRDS Cloud*
-
-Before you start: this is the more involved half of the pull. It's worth knowing why it pays off. **Modules 11–13 are all built on the textual half of the panel:**
-
-- **Module 11 (BERT / FinBERT)** encodes each MD&A paragraph into a 768-dim vector and uses those embeddings as additional features in the M9/M10 models. The headline question is "does what management *says* about the firm add predictive signal beyond the numbers?" — and you can't answer that without management's actual words.
-- **Module 12 (LLM zero-shot)** classifies and extracts structured fields from MD&A — risk-factor categorization, forward-looking-statement detection, segment disclosures. Same input corpus.
-- **Module 13 (RAG)** indexes the MD&A chunks and lets you query the corpus with natural language ("which firms discussed supply chain in 2022?"). Same corpus again, sliced finer.
-
-MD&A specifically — not 10-K full text, not earnings-call transcripts — because (1) it's a standardized location (Item 7) so the parser is reliable, (2) it's where management narrates strategy and risk in their own words rather than reciting GAAP-required numbers, (3) it joins cleanly to Compustat on `(gvkey, fyear)`, which means the textual signal is directly comparable to the fundamentals signal in M9/M10. Three modules of work depend on getting this Parquet right.
-
-Open the VS Code Remote-SSH window connected to WRDS Cloud (§4) and clone (or `cd` into) your repo there (§5). In that remote terminal, brief the agent:
-
-> **Brief.** Write `src/pull_mdna.py`, intended to run **on the WRDS Cloud** (not locally). Two stages.
->
-> **Stage 1 — find the right 10-K filings.** Connect via `wrds.Connection()`. Use the same S&P 500 / 2010–2024 panel as `src/pull_fundamentals.py` — re-derive `(gvkey, fyear)` from CRSP + `ccmxpf_lnkhist` so this script is independent. Map each `gvkey` to its historical `cik` via `wrdssec_all.wciklink_gvkey` (this is the WRDS-maintained linking table; pick the link active for each firm-year, not just the most recent). Then query `wrdssec_all.wrds_forms` for `form='10-K'` filings whose filing date falls in fiscal year `fyear` (or shortly after — 10-Ks typically file 60–90 days after fiscal year-end, so allow `fyear+1` Q1). Each row of the result has a `wrdsfname` column pointing to a file path under `/wrds/sec/sasdata/…`.
->
-> **Stage 2 — read the file and extract Item 7 (MD&A).** For each row, open `wrdsfname` from the local filesystem, read the contents, and extract the "Item 7" section (Management's Discussion and Analysis). Use a 10-K-aware parser — `sec-parser` from PyPI is the cleanest path; regex on `r"item\s*7[.\s]"` … `r"item\s*7a[.\s]"` is the fallback. If extraction fails for a filing, log the `gvkey/fyear` and skip — don't fabricate text.
->
-> Output to `data/raw/mdna.parquet` with columns `(gvkey, fyear, cik, fdate, mdna_text, char_count)`. Print row counts and the count of failed extractions. Don't commit the parquet.
->
-> **Parallelize Stage 2.** Per-filing parsing takes 1–2 seconds; doing 7,000 of them sequentially is hours. Use `multiprocessing.Pool` with **4–6 workers** (the WRDS Cloud login node is shared — don't claim 32 cores) to bring total runtime under an hour. Make sure the per-filing function is picklable: read the path, return the parsed text, no shared state.
->
-> `uv add sec-parser`. (`uv` is preinstalled on WRDS Cloud; if not, `pip install --user uv` from the remote terminal.) Note: only Duo Push is supported for the Postgres connection (§7), so the first call will hang briefly while you approve a push on your phone.
-
-What this brief gets right:
-
-- **Where it runs.** The `wrdsfname` paths only resolve on WRDS Cloud's filesystem; from your laptop, even with valid `.pgpass`, the file reads would fail. This is *the* reason §4/§5 exist.
-- **Historical CIK linking.** Companies change CIKs (mergers, restructurings). `wciklink_gvkey` keeps history; using a current-only mapping produces silent gaps for firms that switched.
-- **Filing-date window.** 10-K filing date is usually in early `fyear+1`, not in `fyear`. Naively filtering by `fdate ∈ fyear` drops most of your panel.
-- **Skip-and-log on parse failure.** A few percent of 10-Ks have non-standard structure that the parser will choke on. Better to log them than to ship a Parquet with hallucinated text in a few rows.
-
-After the script runs cleanly on the WRDS Cloud, push from there:
-
-```bash
-git add src/pull_mdna.py
-git commit -m "M8: MD&A pull from wrds_forms"
-git push
-```
-
-The Parquet file (`data/raw/mdna.parquet`) stays on the WRDS Cloud — it's gitignored. **What you push back is the script**, so a teammate or a grader on their own WRDS Cloud session can re-run it.
-
-For the rest of Part 2 we work locally, so you'll either need to (a) re-run `src/pull_mdna.py` on your laptop after copying the SEC filing files down (heavy and not recommended), or (b) copy the resulting `mdna.parquet` from WRDS Cloud to your local `data/raw/` once. Option (b) is the practical path — the textual data is the size of a few hundred MB at most, and it's a one-time download.
-
-> **What is `scp`?** Short for *Secure Copy* — it's `cp` (the Unix file-copy command) but where one side is a remote server reached over SSH instead of another folder on your local machine. The syntax is `scp <source> <destination>`, and either path can be remote, written as `user@host:/absolute/or/~/relative/path`. Authentication, encryption, and the Duo step are all the same as in §3 — it's the same SSH connection, just used to move bytes instead of running commands. (For very large transfers, `rsync` over SSH is the heavier-duty version; for a one-shot file like this, `scp` is fine.)
-
-```bash
-# from your laptop, after the cloud script has produced mdna.parquet there:
-scp <your-wrds-username>@wrds-cloud.wharton.upenn.edu:~/Projects/ACCY575-wrds-data-analysis/data/raw/mdna.parquet ./data/raw/
-```
-
-This `scp` is the only place a raw parquet crosses the boundary from server to laptop.
-
-## 9. Run it
-
-### 9a. Run the local script
+Read the file the agent produces. Make sure it does what the brief said and nothing else. Then run it:
 
 ```bash
 uv run python -m src.pull_fundamentals
@@ -385,13 +320,50 @@ Sanity checks worth running by hand:
 - Year coverage: `df['fyear'].value_counts().sort_index()` — should be roughly even across 2010–2024.
 - No duplicate `(gvkey, fyear)` pairs.
 
-If any of these look wrong, that's a brief problem, not a data problem — go back to §8a and fix the spec.
+If any of these look wrong, that's a brief problem, not a data problem — go back to the brief and fix the spec.
 
-### 9b. Run the cloud script
+### 8b. MD&A text — *on the WRDS Cloud*
 
-This step is the long one — plan for it.
+This is the more involved half of the pull, and three later modules depend on it:
 
-**Wrap the run in `tmux` first.** A 30+ minute job over SSH dies the moment your laptop sleeps, your Wi-Fi switches, or you close the VS Code window. `tmux` is a terminal multiplexer that keeps your shell session alive on the server even when your client disconnects:
+- **Module 11 (BERT / FinBERT)** encodes each MD&A paragraph into a 768-dim vector and adds those embeddings as features in the M9/M10 models — the question being whether what management *says* adds signal beyond the numbers.
+- **Module 12 (LLM zero-shot)** classifies and extracts structured fields from MD&A: risk-factor categorization, forward-looking-statement detection, segment disclosures.
+- **Module 13 (RAG)** indexes the MD&A chunks and lets you query the corpus with natural language ("which firms discussed supply chain in 2022?").
+
+Why MD&A and not the full 10-K or earnings-call transcripts: it's a standardized location (Item 7) the parser can find reliably, it's where management writes in their own words rather than reciting GAAP, and it joins cleanly to Compustat on `(gvkey, fyear)` so the text and fundamentals signals are directly comparable.
+
+Open the VS Code Remote-SSH window connected to WRDS Cloud (§4) and clone (or `cd` into) your repo there (§5). In that remote terminal, brief the agent:
+
+> **Brief.** Write `src/pull_mdna.py`, intended to run **on the WRDS Cloud** (not locally). Two stages.
+>
+> **Stage 1 — find the right 10-K filings.** Connect via `wrds.Connection()`. Use the same S&P 500 / 2010–2024 panel as `src/pull_fundamentals.py` — re-derive `(gvkey, fyear)` from CRSP + `ccmxpf_lnkhist` so this script is independent. Map each `gvkey` to its historical `cik` via `wrdssec_all.wciklink_gvkey` (this is the WRDS-maintained linking table; pick the link active for each firm-year, not just the most recent). Then query `wrdssec_all.wrds_forms` for `form='10-K'` filings whose filing date falls in fiscal year `fyear` (or shortly after — 10-Ks typically file 60–90 days after fiscal year-end, so allow `fyear+1` Q1). Each row of the result has a `wrdsfname` column pointing to a file path under `/wrds/sec/sasdata/…`.
+>
+> **Stage 2 — read the file and extract Item 7 (MD&A).** For each row, open `wrdsfname` from the local filesystem, read the contents, and extract the "Item 7" section (Management's Discussion and Analysis). Use a 10-K-aware parser — `sec-parser` from PyPI is the cleanest path; regex on `r"item\s*7[.\s]"` … `r"item\s*7a[.\s]"` is the fallback. If extraction fails for a filing, log the `gvkey/fyear` and skip — don't fabricate text.
+>
+> Output to `data/raw/mdna.parquet` with columns `(gvkey, fyear, cik, fdate, mdna_text, char_count)`. Print row counts and the count of failed extractions. Don't commit the parquet.
+>
+> **Parallelize Stage 2.** Per-filing parsing takes 1–2 seconds; doing 7,000 of them sequentially is hours. Use `multiprocessing.Pool` with **4–6 workers** (the WRDS Cloud login node is shared — don't claim 32 cores) to bring total runtime under an hour. Make sure the per-filing function is picklable: read the path, return the parsed text, no shared state.
+
+> **What is `multiprocessing`?** Python's standard library for true parallel execution. By default, Python's Global Interpreter Lock (GIL) prevents threads from running Python bytecode in parallel — `threading` is fine for IO-bound work but doesn't speed up CPU-bound work like parsing. **`multiprocessing` sidesteps the GIL by spawning separate Python processes**, each with its own interpreter, on different CPU cores. The `Pool` API distributes a list of inputs across N workers: you give it a function and an iterable, it runs them in parallel and returns the results. Each input is *pickled* (serialized) to ship to a worker and the result is pickled back, so the function and its arguments have to be picklable — top-level functions and plain values work; closures and lambdas don't. Use it when (a) the work is CPU-bound (this is) and (b) you have cores to use (login nodes typically have 8–32, but be polite — 4–6 is appropriate on a shared resource).
+
+What this brief gets right:
+
+- **Where it runs.** The `wrdsfname` paths only resolve on WRDS Cloud's filesystem; from your laptop, even with valid `.pgpass`, the file reads would fail. This is *the* reason §4/§5 exist.
+- **Historical CIK linking.** Companies change CIKs (mergers, restructurings). `wciklink_gvkey` keeps history; using a current-only mapping produces silent gaps for firms that switched.
+- **Filing-date window.** 10-K filing date is usually in early `fyear+1`, not in `fyear`. Naively filtering by `fdate ∈ fyear` drops most of your panel.
+- **Skip-and-log on parse failure.** A few percent of 10-Ks have non-standard structure that the parser will choke on. Better to log them than to ship a Parquet with hallucinated text in a few rows.
+
+Read the file the agent produces. Then run it — this is the long step, plan for it.
+
+**Add the parsing dependency.** `sec-parser` isn't in the existing lockfile yet:
+
+```bash
+uv add sec-parser
+```
+
+(`uv` is preinstalled on WRDS Cloud; if it isn't, `pip install --user uv` first.)
+
+**Wrap the run in `tmux`.** A 30+ minute job over SSH dies the moment your laptop sleeps, your Wi-Fi switches, or you close the VS Code window. `tmux` is a terminal multiplexer that keeps your shell session alive on the server even when your client disconnects:
 
 ```bash
 tmux new -s mdna     # start a named session called "mdna"
@@ -405,25 +377,42 @@ If you get disconnected (close the laptop, lose Wi-Fi, anything), the script kee
 
 | Setup | Time for ~7,000 filings |
 |---|---|
-| Sequential (no `multiprocessing`) | 1.5–3 hours |
-| 4-worker pool | ~45 min |
-| 6-worker pool | ~25 min |
+| Sequential (no `multiprocessing`) | 2–3 hours |
+| 4-worker pool | 35–55 min |
+| 6-worker pool | 25–40 min |
 
-If the brief was followed correctly, you should be in the second or third row. Approve the Duo Push on first Postgres connection, watch the progress for the first few hundred filings to make sure the rate is sensible (~3–6 filings/sec with 6 workers), then `Ctrl+b d` out of `tmux` and let it cook. Come back in 30–60 minutes.
+If the brief was followed correctly, you should be in the second or third row. Approve the Duo Push on first Postgres connection, watch the progress for the first few hundred filings to make sure the rate is sensible (**3–4 filings/sec with 6 workers** after the first couple of minutes — the very start is slower while workers warm up), then `Ctrl+b d` out of `tmux` and let it cook. Come back in 30–60 minutes.
 
 Sanity checks once it finishes:
 
-- Row count should be close to (but slightly less than) §9a's row count. Some firms file 10-K-equivalents (10-KSB, 10-K405) instead, and a small fraction of extractions will fail.
+- Row count should be close to (but slightly less than) §8a's row count. Some firms file 10-K-equivalents (10-KSB, 10-K405) instead, and a small fraction of extractions will fail.
 - Failed-extraction count should be under ~5% of the panel. Higher means the parser is broken — fix and re-run.
 - Spot-check three random rows by printing `mdna_text[:500]` — does it look like real MD&A prose?
 
-If any of these look wrong, fix the §8b brief and re-run.
+If any of these look wrong, fix the brief above and re-run.
 
-### 9c. Get the cloud output back to your laptop
+**Push the script back to GitHub** from the cloud:
 
-The `scp` line at the end of §8b. After this, both Parquets sit in your local `data/raw/` and Modules 9–14 can join them on `(gvkey, fyear)`.
+```bash
+git add src/pull_mdna.py
+git commit -m "M8: MD&A pull from wrds_forms"
+git push
+```
 
-## 10. Validate with `pandera`
+The Parquet file (`data/raw/mdna.parquet`) stays on the WRDS Cloud — it's gitignored. **What you push back is the script**, so a teammate or a grader on their own WRDS Cloud session can re-run it.
+
+**Copy the Parquet down to your laptop.** For the rest of Part 2 your laptop is the primary work environment, so once `mdna.parquet` is built on the WRDS Cloud you'll copy *that one file* down. (Re-running `src/pull_mdna.py` locally is *not* a fallback — the raw filings the script reads from `/wrds/sec/sasdata/` only exist on the WRDS Cloud's filesystem, and pulling them in bulk runs into hundreds of GB of transfer plus vendor licensing.) Expect the parsed Parquet to be **roughly 500 MB to 1 GB** depending on how aggressively the parser strips boilerplate. It's a one-time download.
+
+> **What is `scp`?** Short for *Secure Copy* — it's `cp` (the Unix file-copy command) but where one side is a remote server reached over SSH instead of another folder on your local machine. The syntax is `scp <source> <destination>`, and either path can be remote, written as `user@host:/absolute/or/~/relative/path`. Authentication, encryption, and the Duo step are all the same as in §3 — it's the same SSH connection, just used to move bytes instead of running commands. (For very large transfers, `rsync` over SSH is the heavier-duty version; for a one-shot file like this, `scp` is fine.)
+
+```bash
+# from your laptop, after the cloud script has produced mdna.parquet there:
+scp <your-wrds-username>@wrds-cloud.wharton.upenn.edu:~/Projects/ACCY575-wrds-data-analysis/data/raw/mdna.parquet ./data/raw/
+```
+
+This `scp` is the only place a raw parquet crosses the boundary from server to laptop. After it lands, both Parquets sit in your local `data/raw/` and Modules 9–14 can join them on `(gvkey, fyear)`.
+
+## 9. Validate with `pandera`
 
 Same pattern as Module 5. Add `src/schema.py` with one schema per Parquet:
 
@@ -462,14 +451,11 @@ Wire each schema into the pull script that produces it (`pull_fundamentals.py` v
 
 The `min_value=200` on `mdna_text` is deliberate: an extraction that returns 50 characters is almost certainly the parser misfiring, not a real MD&A. The schema catches it before the bad row makes it downstream.
 
-## 11. Decide what gets committed
+## 10. Decide what gets committed
 
 WRDS itself permits academic, non-commercial use. The catch is the **underlying data vendors** — Compustat, CRSP, IBES, Audit Analytics — each have their own redistribution clauses on top of the WRDS umbrella, and several restrict reposting raw extracts even for academic users. Reading every vendor license to figure out what's allowed is more work than just keeping raw pulls off public repos.
 
-So the default for this course is: **don't commit raw vendor data**. Two reasons, only the first is licensing-driven:
-
-1. **Vendor licensing.** Some are stricter than the WRDS umbrella. Default-private avoids you having to read each one.
-2. **It's not useful.** Anyone reproducing your work — a grader, a teammate, future-you — has their own WRDS access and can re-run the pull from your script in a minute. A frozen Parquet snapshot is *less* flexible than the script that generated it.
+So the default for this course is: **don't commit raw vendor data**. Partly that's a licensing call — some vendors are stricter than the WRDS umbrella, and default-private spares you reading each license. But the bigger reason is that the data file isn't worth committing: anyone reproducing your work — a grader, a teammate, future-you — has their own WRDS access and can re-run the pull from your script in a minute. A frozen Parquet snapshot is *less* flexible than the script that generated it.
 
 What you commit:
 
@@ -491,25 +477,54 @@ git status                   # nothing in data/raw/ should appear
 git log --all -- '*.pgpass'  # should print nothing
 ```
 
-## 12. Commit and push
+## 11. Commit and push
+
+You've now made changes in **two working trees** — your laptop and your VS Code Remote-SSH session on the WRDS Cloud. Each is its own Git checkout with its own staged files. Both push to the same GitHub remote, which is the rendezvous point. Do the commit/push on **both**.
+
+### On your laptop
 
 ```bash
 git add src/ tests/ pyproject.toml uv.lock README.md .gitignore
 git status                   # eyeball one more time before committing
-git commit -m "M8: WRDS pull script + validation schema"
+git commit -m "M8: fundamentals pull + validation schemas"
 git push
 ```
 
-This is the `main` that Modules 9–14 will each branch from. From now on, **work on `main` directly is rare** — every model gets its own branch.
+This is the laptop side: `pull_fundamentals.py`, the `pandera` schemas in `src/schema.py`, the local lockfile changes from §7's `uv add wrds pandas pyarrow pandera`.
+
+### On the WRDS Cloud
+
+In your remote VS Code terminal:
+
+```bash
+git pull                     # bring down the schema you just pushed from laptop
+# (wire MdnaSchema into pull_mdna.py — quick edit; re-run §8b if you want validation
+#  on a fresh write, otherwise the existing parquet is still good)
+git add src/pull_mdna.py pyproject.toml uv.lock
+git status
+git commit -m "M8: MD&A pull script + sec-parser dep"
+git push
+```
+
+This commits the cloud-side delta — `pull_mdna.py` itself (already pushed earlier in §8b if you followed along, but any post-validation tweaks land here) and the lockfile change from `uv add sec-parser` in §8b. **Don't forget the lockfile** — without it, a teammate cloning the repo and trying to re-run the cloud script gets `ModuleNotFoundError: sec_parser` and has no way to know why.
+
+### After both are pushed
+
+```bash
+# back on your laptop:
+git pull
+```
+
+Now `main` on your laptop, your cloud session, and GitHub are all in sync. This is the `main` that Modules 9–14 will each branch from — and **work on `main` directly is rare from here on out**: every model gets its own branch.
 
 ### Letting the agent do this
 
 You can also just tell your coding agent **"push all"** or **"commit and push the schema work"** — most agents (Claude Code, Cursor in agent mode, Copilot agent) will run `git status`, draft a commit message, stage, commit, push, and report back. For routine work, this is genuinely faster than typing the four lines above.
 
-It is not a free pass, though. Two specific things to watch every time the agent does this for you:
+It's not a free pass, though. Two things you watch for, every time:
 
-- **Read the staged file list before approving the commit.** Most agents pause and show the staged files; some quietly use `git add -A`, which sweeps in *everything*, including a forgotten `data/raw/foo.parquet`, a `.env`, or a notebook with credentials in cell output. A leaked WRDS password or API key in `git push origin main` of a public repo is compromised within minutes. There is no "untoast the bread" command for that.
-- **Read the commit message before approving.** Vague messages ("update files", "fix stuff") in your history aren't useful to a teammate or to future-you, and they're not useful to a grader either. If the agent's draft is bad, send it back; this is the same brief-and-review loop from Module 6.
+- **The staged file list, before you approve the commit.** Most agents pause and show what's staged; some quietly run `git add -A` and sweep in *everything*, including a forgotten `data/raw/foo.parquet`, a `.env`, or a notebook with credentials in cell output. A leaked WRDS password or API key in a `git push origin main` to a public repo is compromised within minutes — there's no "untoast the bread" command for it.
+- **The commit message, before you approve it.** Vague messages ("update files", "fix stuff") aren't useful to a teammate, future-you, or a grader. If the agent's draft is bad, send it back — same brief-and-review loop as Module 6.
 
 For Part 2 work going forward, **"push all" is fine on a feature branch** (low blast radius — anything wrong gets caught at the PR review in §6 of each subsequent module). For pushes to `main`, slow down. The blast radius is the public repo and your reputation as someone whose history doesn't contain accidents.
 

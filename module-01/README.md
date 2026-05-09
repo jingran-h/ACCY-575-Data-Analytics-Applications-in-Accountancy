@@ -1,6 +1,6 @@
 # Module 1 — Terminal, VS Code, and Your First `uv` Project
 
-> **Hands-on:** [walkthrough.md](walkthrough.md) — step-by-step instructions for the module.
+> **Hands-on:** [walkthrough.md](walkthrough.md) — setting up your terminal, VS Code, and your first `uv`-managed Python project.
 
 ## Motivation
 

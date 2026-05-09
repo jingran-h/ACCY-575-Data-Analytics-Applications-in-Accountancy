@@ -1,6 +1,6 @@
 # Module 5 — Data Validation and Reproducibility
 
-> **Hands-on:** [walkthrough.md](walkthrough.md) — step-by-step instructions for the module.
+> **Hands-on:** [walkthrough.md](walkthrough.md) — adding asserts, a `pandera` schema, deterministic seeds, and your first `pytest` suite.
 
 ## Motivation
 

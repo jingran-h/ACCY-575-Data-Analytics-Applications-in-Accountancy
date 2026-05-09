@@ -1,6 +1,6 @@
 # Module 3 — Pull Requests and Code Review
 
-> **Hands-on:** [walkthrough.md](walkthrough.md) — step-by-step instructions for the module.
+> **Hands-on:** [walkthrough.md](walkthrough.md) — opening your first pull request and pair-reviewing a classmate's.
 
 ## Motivation
 
@@ -13,7 +13,7 @@ This module is less new tools, more *practice*. The mechanics of opening a PR ar
 ## Goals
 
 - Open a pull request with a description that lets a reviewer understand it without reading every diff.
-- Leave code-review comments that are specific, kind, and actionable. (You'll review a classmate's PR this module — same muscle you'll use in Part 2 to evaluate AI-generated code.)
+- Leave code-review comments that are specific, kind, and actionable. (You'll review a classmate's PR this module — the same skill you'll use in Part 2 to evaluate AI-generated code.)
 
 ## Going Deeper *(optional)*
 

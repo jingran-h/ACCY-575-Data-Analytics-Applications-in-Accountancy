@@ -70,7 +70,7 @@ No prior VS Code or Git experience is required. Modules 1–4 cover both from sc
 
 ### Part 2 — Agent-Driven Data Analysis
 
-A single dataset, pulled from WRDS in Module 8, is reused across every subsequent Part 2 module. Each module teaches one analytical method *conceptually*; the agent does the implementation.
+The Part 2 panel, built in Module 8, is a sample of S&P 500 firm-years with two sides: Compustat **fundamentals** (assets, revenue, R&D, etc.) and the **10-K MD&A text** for the same firm-years, joined on `(gvkey, fyear)`. Both sides come through WRDS — the fundamentals over Postgres from your laptop, the filings off the WRDS Cloud's filesystem from a remote VS Code session. Modules 9–10 lean on the fundamentals, 11–13 on the text, 14 ties them together. Each module teaches one analytical method *conceptually*; the agent does the implementation.
 
 | Module | Topic | Focus |
 |------|-------|-------|
