@@ -59,7 +59,7 @@ No prior VS Code or Git experience is required. Weeks 1–4 cover both from scra
 | 3 | Pull requests & code review; pair-review a classmate's PR | GitHub PRs |
 | 4 | Project structure & `pyproject.toml`; secrets (`.env`, `.gitignore`); a real README | `uv`, `.env` |
 | 5 | Data validation & reproducibility: asserts, types, seeds, snapshot tests, `pandera` | `pandera`, `pytest` basics |
-| 6 | AI-assisted coding & debugging; prompt-injection awareness; Markdown `results.md` | GitHub Copilot, VS Code debugger, OWASP LLM Top 10 |
+| 6 | AI-assisted coding & debugging; AI permissions; prompt-injection awareness | GitHub Copilot, VS Code debugger, OWASP LLM Top 10 |
 | 7 | **Mini-project:** reproducible analysis repo (individual) | Full workflow |
 
 ### Part 2 — AI-Assisted Case Work
