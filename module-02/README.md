@@ -1,14 +1,14 @@
-# Week 2 — Git Fundamentals
+# Module 2 — Git Fundamentals
 
-> **Hands-on:** [walkthrough.md](walkthrough.md) — step-by-step instructions for the week.
+> **Hands-on:** [walkthrough.md](walkthrough.md) — step-by-step instructions for the module.
 
 ## Motivation
 
 Everyone has a `report_v3_FINAL_actually_final.docx` somewhere. That's the problem Git solves, except it does it automatically, and it works for code instead of Word docs.
 
-Most students hate Git the first week and can't imagine working without it after a month. Stick with it. The other reason to bother: when a recruiter looks at your GitHub later, the question isn't whether you have repos there. It's whether the commit history makes you look like someone who's been doing this for a while.
+Most students hate Git the first module and can't imagine working without it after a month. Stick with it. The other reason to bother: when a recruiter looks at your GitHub later, the question isn't whether you have repos there. It's whether the commit history makes you look like someone who's been doing this for a while.
 
-By the end of this week you will have your project under version control, a GitHub account with student benefits, and your project pushed to a private GitHub repository.
+By the end of this module you will have your project under version control, a GitHub account with student benefits, and your project pushed to a private GitHub repository.
 
 ## Goals
 
@@ -25,4 +25,4 @@ By the end of this week you will have your project under version control, a GitH
 
 ## Materials
 
-*Slides, in-class exercises, and recordings posted here as the week approaches.*
+*Slides, in-class exercises, and recordings posted here as the module approaches.*

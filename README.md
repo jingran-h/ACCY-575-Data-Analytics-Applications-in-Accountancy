@@ -20,8 +20,8 @@ The course is built around real datasets and real business problems. Cases are d
 
 The semester is split into two halves:
 
-- **Part 1 (Weeks 1–7) — The Modern Python Project Workflow.** You learn to set up and run a professional-grade analytical project: VS Code, `uv`, Git/GitHub, project structure, secrets handling, data validation, and AI-assisted coding. Your deliverable is a reproducible GitHub repository, not a Jupyter notebook.
-- **Part 2 (Weeks 8–16) — AI-Assisted Case Work.** You apply that workflow to a sequence of accounting cases. The technical path is open: you decide which methods and libraries to use, and AI tools (Claude, GitHub Copilot, ChatGPT) are permitted at every stage. Each submission includes a one-page AI Collaboration Log documenting how you used and evaluated AI output.
+- **Part 1 (Modules 1–7) — The Modern Python Project Workflow.** You learn to set up and run a professional-grade analytical project: VS Code, `uv`, Git/GitHub, project structure, secrets handling, data validation, and AI-assisted coding. Your deliverable is a reproducible GitHub repository, not a Jupyter notebook.
+- **Part 2 (Modules 8–16) — AI-Assisted Case Work.** You apply that workflow to a sequence of accounting cases. The technical path is open: you decide which methods and libraries to use, and AI tools (Claude, GitHub Copilot, ChatGPT) are permitted at every stage. Each submission includes a one-page AI Collaboration Log documenting how you used and evaluated AI output.
 
 ---
 
@@ -44,7 +44,7 @@ By the end of this course you will be able to:
 - **Git** and a **GitHub** account (free for students via [GitHub Education](https://education.github.com/))
 - An AI coding assistant: **GitHub Copilot** (free for students via GitHub Education)
 
-No prior VS Code or Git experience is required. Weeks 1–4 cover both from scratch.
+No prior VS Code or Git experience is required. Modules 1–4 cover both from scratch.
 
 ---
 
@@ -52,7 +52,7 @@ No prior VS Code or Git experience is required. Weeks 1–4 cover both from scra
 
 ### Part 1 — The Modern Python Project Workflow
 
-| Week | Topic | Focus |
+| Module | Topic | Focus |
 |------|-------|-------|
 | 1 | Terminal/CLI fundamentals; VS Code setup; first Python project with `uv` | shell, VS Code, `uv` |
 | 2 | Git fundamentals: commits, branches, GitHub workflow | Git, GitHub |
@@ -64,7 +64,7 @@ No prior VS Code or Git experience is required. Weeks 1–4 cover both from scra
 
 ### Part 2 — AI-Assisted Case Work
 
-| Week | Topic | Focus |
+| Module | Topic | Focus |
 |------|-------|-------|
 | 8–9 | **PCard** — procurement card transactions | Internal Audit |
 | 10 | **Differential Analyses** | Managerial Accounting |
@@ -77,7 +77,7 @@ No prior VS Code or Git experience is required. Weeks 1–4 cover both from scra
 
 ## 5. Assessment
 
-### Part 1 — Mini-project (Week 7)
+### Part 1 — Mini-project (Module 7)
 
 Graded against objective workflow criteria: does the repo run on a clean environment, is the structure clear, do the validation checks pass, is the results README clear and accurate?
 

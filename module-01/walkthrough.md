@@ -1,4 +1,4 @@
-# Week 1 — Walkthrough: Terminal, VS Code, and Your First `uv` Project
+# Module 1 — Walkthrough: Terminal, VS Code, and Your First `uv` Project
 
 ## 1. Open a terminal
 
@@ -97,7 +97,7 @@ mkdir -p accy575            # umbrella folder for all ACCY 575 work
 cd accy575
 ```
 
-Now create the project for Part 1's work *inside* the umbrella. In Week 2 you'll connect this project to GitHub as its own repository, so the name you pick now is the name you'll see in your GitHub repo list for years. Pick something descriptive: a name like `ACCY575-walkthrough` tells you what the project is at a glance; a generic `coursework` or `walkthrough` won't. Pick anything that's **not** `accy575` (we just used that for the umbrella) and stay consistent.
+Now create the project for Part 1's work *inside* the umbrella. In Module 2 you'll connect this project to GitHub as its own repository, so the name you pick now is the name you'll see in your GitHub repo list for years. Pick something descriptive: a name like `ACCY575-walkthrough` tells you what the project is at a glance; a generic `coursework` or `walkthrough` won't. Pick anything that's **not** `accy575` (we just used that for the umbrella) and stay consistent.
 
 ```bash
 uv init ACCY575-walkthrough
@@ -113,7 +113,7 @@ code .
 
 If `code .` doesn't work (the `code` CLI isn't always on your PATH by default), open VS Code from your Applications / Start menu and use *File → Open Folder…* to pick the `ACCY575-walkthrough` folder.
 
-You'll use **this same project** for all of Part 1 (Weeks 1–7). Don't make a new one each week — you'll lose the benefit of compound progress.
+You'll use **this same project** for all of Part 1 (Modules 1–7). Don't make a new one each module — you'll lose the benefit of compound progress.
 
 ## 6. Run Python via `uv`
 
@@ -135,7 +135,7 @@ uv add pandas
 
 Three things happened:
 - `pyproject.toml` gained a `dependencies = [...]` line.
-- A `uv.lock` file appeared. Commit `uv.lock` once you start using Git next week — it pins exact versions.
+- A `uv.lock` file appeared. Commit `uv.lock` once you start using Git next module — it pins exact versions.
 - `pandas` got installed inside `.venv/`. (Still don't commit `.venv/` — `uv.lock` is the canonical "what's installed" record.)
 
 ## 8. Try a Jupyter notebook

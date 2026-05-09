@@ -1,14 +1,14 @@
-# Week 1 — Terminal, VS Code, and Your First `uv` Project
+# Module 1 — Terminal, VS Code, and Your First `uv` Project
 
-> **Hands-on:** [walkthrough.md](walkthrough.md) — step-by-step instructions for the week.
+> **Hands-on:** [walkthrough.md](walkthrough.md) — step-by-step instructions for the module.
 
 ## Motivation
 
 Most data classes start you in Jupyter, writing pandas in cells. That's fine for learning syntax, but it's not how anyone you'll work for actually expects you to deliver work. Your manager isn't going to clone `Untitled-7.ipynb` off your laptop.
 
-This week is the boring stuff nobody bothers to teach but every job assumes you know: how to use a terminal, how to set up a real Python project, what an editor that isn't a notebook is for.
+This module is the boring stuff nobody bothers to teach but every job assumes you know: how to use a terminal, how to set up a real Python project, what an editor that isn't a notebook is for.
 
-If you do everything in this week's [walkthrough](walkthrough.md), you'll end the week with a working development environment, a project managed by `uv`, and the ability to run and step through Python in a debugger. Sounds basic. It isn't — plenty of CS majors at UIUC can't do all of that cleanly even by senior year. You'll have it down by the end of this week.
+If you do everything in this module's [walkthrough](walkthrough.md), you'll end the module with a working development environment, a project managed by `uv`, and the ability to run and step through Python in a debugger. Sounds basic. It isn't — plenty of CS majors at UIUC can't do all of that cleanly even by senior year. You'll have it down by the end of this module.
 
 ## Goals
 
@@ -28,4 +28,4 @@ If you do everything in this week's [walkthrough](walkthrough.md), you'll end th
 
 ## Materials
 
-*Slides, in-class exercises, and recordings posted here as the week approaches.*
+*Slides, in-class exercises, and recordings posted here as the module approaches.*

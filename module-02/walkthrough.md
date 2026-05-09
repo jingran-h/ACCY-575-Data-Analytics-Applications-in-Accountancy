@@ -1,4 +1,4 @@
-# Week 2 — Walkthrough: Git Fundamentals
+# Module 2 — Walkthrough: Git Fundamentals
 
 ## Before you begin: create your GitHub account
 
@@ -7,7 +7,7 @@ Open a tab and do this **now**.
 1. **Required:** Have a GitHub account. If you already have one, use it — no need to create a new one. Otherwise, sign up at [github.com](https://github.com); any email is fine.
 2. **Optional:** Apply for [GitHub Education](https://education.github.com/) — verification unlocks **GitHub Copilot Pro for free** as your AI coding assistant for the rest of the course. (You'll need an `@illinois.edu` email on your account for student verification — add it under *Settings → Emails* if it's not there yet.) Approval can take up to 48 hours, so start early if you want it.
 
-   *Skip step 2 if you already have a paid LLM subscription* you plan to use as your coding agent (Claude Pro, ChatGPT Plus, Cursor Pro, Claude Code, etc.). The course doesn't care which agent you use; we'll cover setup options in Week 6.
+   *Skip step 2 if you already have a paid LLM subscription* you plan to use as your coding agent (Claude Pro, ChatGPT Plus, Cursor Pro, Claude Code, etc.). The course doesn't care which agent you use; we'll cover setup options in Module 6.
 
 Then come back and continue. None of this blocks Steps 1–5 below.
 
@@ -49,7 +49,7 @@ git init
 git status              # now: lots of untracked files
 ```
 
-The default `.gitignore` from `uv init` already excludes `__pycache__/` and `.venv/`. (In Week 4, when we introduce `.env` for secrets, you'll see why this list matters — once a real API key lands in Git history, it's compromised forever, even if you delete it later.)
+The default `.gitignore` from `uv init` already excludes `__pycache__/` and `.venv/`. (In Module 4, when we introduce `.env` for secrets, you'll see why this list matters — once a real API key lands in Git history, it's compromised forever, even if you delete it later.)
 
 ## 3. First commit
 
@@ -106,7 +106,7 @@ A — B — C            ← main
 
 This is why branches are cheap: they're pointers, not file copies.
 
-**Why bother**: try things without breaking working code; let multiple people work in parallel; review work as a unit (Week 3). Real example for this course: you want to test a different aggregation on PCard data — branch off, experiment, then merge back if it works or throw the branch away if it doesn't.
+**Why bother**: try things without breaking working code; let multiple people work in parallel; review work as a unit (Module 3). Real example for this course: you want to test a different aggregation on PCard data — branch off, experiment, then merge back if it works or throw the branch away if it doesn't.
 
 > **Word doc analogy:** the "approved version" lives in `main`. A branch is "let me try rewriting Section 3 without messing up the approved doc." If the rewrite works, merge it in. If not, delete the branch — main is untouched.
 
@@ -203,4 +203,4 @@ Most developers use the GUI for routine ops (commit, push, branch switch) and dr
 - [ ] You have at least 5 commits with meaningful messages.
 - [ ] You can use `git checkout -b` to make a branch and `git merge` to merge it back.
 - [ ] Your project is on GitHub (private) and the latest commit shows there.
-- [ ] You can explain (in one sentence) why we'll add `.env` to `.gitignore` in Week 4.
+- [ ] You can explain (in one sentence) why we'll add `.env` to `.gitignore` in Module 4.
