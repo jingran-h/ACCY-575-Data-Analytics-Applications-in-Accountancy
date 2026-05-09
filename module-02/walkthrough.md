@@ -106,7 +106,7 @@ A — B — C            ← main
 
 This is why branches are cheap: they're pointers, not file copies.
 
-**Why bother**: try things without breaking working code; let multiple people work in parallel; review work as a unit (Module 3). Real example for this course: you want to test a different aggregation on PCard data — branch off, experiment, then merge back if it works or throw the branch away if it doesn't.
+**Why bother**: try things without breaking working code; let multiple people work in parallel; review work as a unit (Module 3). Real example for this course: in Part 2 you'll want to try a different feature set or a different model on the WRDS dataset — branch off, experiment, then merge back if it works or throw the branch away if it doesn't.
 
 > **Word doc analogy:** the "approved version" lives in `main`. A branch is "let me try rewriting Section 3 without messing up the approved doc." If the rewrite works, merge it in. If not, delete the branch — main is untouched.
 
@@ -154,7 +154,7 @@ gh auth login
 
 Follow the prompts: pick **GitHub.com** → **HTTPS** → **Login with a web browser**. Copy the one-time code shown in your terminal, press Enter, the browser opens, authorize. Done. Credentials are now cached locally — `git push` won't ask for a password again.
 
-> *Why not SSH?* SSH keys also work and have advanced uses (commit signing, server-to-server automation, multi-platform key reuse). But the setup is `ssh-keygen` → `ssh-add` → copy the public key → paste into GitHub, and the failure modes are intimidating. `gh auth login` is the modern equivalent. If you outgrow it later, you'll know.
+> *Why not SSH?* SSH keys also work and have advanced uses (commit signing, server-to-server automation, multi-platform key reuse). But the setup is `ssh-keygen` → `ssh-add` → copy the public key → paste into GitHub, and the failure modes are intimidating. `gh auth login` is the modern equivalent. If you outgrow it later, you'll know — and you'll see SSH itself again in Module 8 when we connect to the WRDS Cloud, where it's the only way in.
 
 Then create a new repo on GitHub:
 
