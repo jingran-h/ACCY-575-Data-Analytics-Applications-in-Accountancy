@@ -21,10 +21,10 @@ The course teaches you how to do real data analysis on real accounting and finan
 The semester is split into three parts:
 
 - **Part 1 (Modules 1–7) — The Modern Python Project Workflow.** You learn to set up and run a professional-grade analytical project: VS Code, `uv`, Git/GitHub, project structure, secrets handling, data validation, and AI-assisted coding. Your deliverable is a reproducible GitHub repository, not a Jupyter notebook.
-- **Part 2 (Modules 8–14) — Agent-Driven Data Analysis.** You pull a real research dataset from WRDS and analyze it with a coding agent doing the implementation. Each module covers one analytical method (OLS, gradient boosting, BERT, LLM zero-shot, retrieval-augmented generation, full agent loop) applied to the same dataset. The lecture is the **concept** — when each method applies, what it assumes, what its output means, how to evaluate it. The agent writes the code; you direct, review, and correct it.
+- **Part 2 (Modules 8–16) — Agent-Driven Data Analysis.** You pull a real research dataset from WRDS and analyze it with a coding agent doing the implementation. Each module covers one method or tool (OLS, gradient boosting, BERT, LLM zero-shot, retrieval-augmented generation, OCR and document parsing, full agent loop) applied to the same dataset, capped by a forward-looking module on autonomous research agents. The lecture is the **concept** — when each method applies, what it assumes, what its output means, how to evaluate it. The agent writes the code; you direct, review, and correct it.
 - **Part 3 — Accounting Cases.** Apply Parts 1 and 2 to a sequence of accounting cases. *Content TBD; will be added once Parts 1–2 are stable.*
 
-Modules 1–14 pace at roughly two per calendar week, fitting into the first eight weeks of the term. Part 3 occupies weeks 9–16.
+Modules 1–16 pace at roughly two per calendar week, fitting into the first eight weeks of the term. Part 3 occupies weeks 9–16.
 
 ---
 
@@ -70,7 +70,7 @@ No prior VS Code or Git experience is required. Modules 1–4 cover both from sc
 
 ### Part 2 — Agent-Driven Data Analysis
 
-The Part 2 panel, built in Module 8, is a sample of S&P 500 firm-years with two sides: Compustat **fundamentals** (assets, revenue, R&D, etc.) and the **10-K MD&A text** for the same firm-years, joined on `(gvkey, fyear)`. Both sides come through WRDS — the fundamentals over Postgres from your laptop, the filings off the WRDS Cloud's filesystem from a remote VS Code session. Modules 9–10 lean on the fundamentals, 11–13 on the text, 14 ties them together. Each module teaches one analytical method *conceptually*; the agent does the implementation.
+The Part 2 panel, built in Module 8, is a sample of S&P 500 firm-years with two sides: Compustat **fundamentals** (assets, revenue, R&D, etc.) and the **10-K MD&A text** for the same firm-years, joined on `(gvkey, fyear)`. Both sides come through WRDS — the fundamentals over Postgres from your laptop, the filings off the WRDS Cloud's filesystem from a remote VS Code session. Modules 9–10 lean on the fundamentals, 11–13 on the text, 14 extends the pipeline to documents that aren't already machine-readable, 15 ties everything together as a supervised end-to-end run, and 16 looks one level further ahead at autonomous research agents. Each module teaches one method or tool *conceptually*; the agent does the implementation.
 
 | Module | Topic | Focus |
 |------|-------|-------|
@@ -80,7 +80,9 @@ The Part 2 panel, built in Module 8, is a sample of S&P 500 firm-years with two 
 | 11 | BERT / FinBERT: encoder transformers for financial text | Hugging Face, embeddings as features |
 | 12 | LLM zero-shot extraction & classification | structured output, evaluation |
 | 13 | Embeddings + retrieval-augmented generation | semantic search, RAG over filings |
-| 14 | Agent end-to-end pipeline | Claude Code / agent SDKs running the full loop |
+| 14 | OCR & document parsing: getting clean text from PDFs, scans, pre-EDGAR filings | LlamaParse, GCP Document AI, Tesseract |
+| 15 | Agent end-to-end pipeline | Claude Code / agent SDKs running the full loop |
+| 16 | Autonomous research agents: where the field is heading | Virtual Lab, AI Scientist, Deep Research, reflection |
 
 ### Part 3 — Accounting Cases
 
