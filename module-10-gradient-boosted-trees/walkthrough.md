@@ -4,7 +4,7 @@
 
 Gradient boosting builds a prediction function as a sum of small decision trees. Each new tree is trained to fix what the previous ones are still getting wrong:
 
-$$F_M(x) = \sum_{m=1}^{M} \nu \, h_m(x).$$
+$$F_M(x) = \sum_{m=1}^{M} \nu \cdot h_m(x).$$
 
 Here $h_m$ is the $m$-th tree and $\nu \in (0, 1]$ is the learning rate. The "gradient" piece refers to how each new tree gets fit. At step $m$, the algorithm computes the negative gradient of the loss against the current prediction,
 

@@ -6,7 +6,7 @@ The point of BERT is to turn a piece of text into a vector. Earlier systems did 
 
 That conditioning happens inside the self-attention operation:
 
-$$\text{Attention}(Q, K, V) = \mathrm{softmax}\!\left(\frac{Q K^\top}{\sqrt{d_k}}\right) V.$$
+$$\text{Attention}(Q, K, V) = \mathrm{softmax}\left(\frac{Q K^\top}{\sqrt{d_k}}\right) V.$$
 
 For each token in the input, the model looks at every other token and decides how much each one matters for the current token's representation. A dozen of these layers stacked produces the rich context-conditional vectors people call "BERT embeddings."
 
