@@ -6,15 +6,15 @@ A pretrained LLM has read a slice of the public internet up to its training cuto
 
 The minimal pipeline has five pieces.
 
-A chunker splits long documents into chunks small enough to retrieve and re-read individually — around 500 tokens, with a little overlap. An embedder turns each chunk into a dense vector, the same operation as Module 11 but at chunk granularity instead of document granularity. A vector store indexes those vectors so you can do fast nearest-neighbor lookup; FAISS, Chroma, or LanceDB are the common local options, Pinecone or Weaviate in the cloud. A retriever embeds an incoming user query and returns the top-$k$ most similar chunks, where similarity is usually cosine:
+A chunker splits long documents into chunks small enough to retrieve and re-read individually — around 500 tokens, with a little overlap. An embedder turns each chunk into a dense vector, the same operation as Module 11 but at chunk granularity instead of document granularity. A vector store indexes those vectors so you can do fast nearest-neighbor lookup; FAISS, Chroma, or LanceDB are the common local options, Pinecone or Weaviate in the cloud. A retriever embeds an incoming user query and returns the $\text{top-}k$ most similar chunks, where similarity is usually cosine:
 
 $$\cos(\theta) = \frac{u \cdot v}{\|u\| \cdot \|v\|}.$$
 
 And a generator — a frontier LLM — receives the query plus the retrieved chunks and produces an answer, ideally with citations to which chunks supported which claims.
 
-Two failure modes are specific to RAG, and you'll see both. Retrieval can miss: the relevant chunk is in the index but doesn't make the top-$k$, and the generator either honestly says "I don't know" (best case) or hallucinates from whatever irrelevant chunks it got (worst case). Generation can be ungrounded: retrieval was fine, but the generator wrote something the retrieved chunks don't support. That happens when the LLM "knows" the answer from training and isn't actually checking the context you gave it.
+Two failure modes are specific to RAG, and you'll see both. Retrieval can miss: the relevant chunk is in the index but doesn't make the $\text{top-}k$, and the generator either honestly says "I don't know" (best case) or hallucinates from whatever irrelevant chunks it got (worst case). Generation can be ungrounded: retrieval was fine, but the generator wrote something the retrieved chunks don't support. That happens when the LLM "knows" the answer from training and isn't actually checking the context you gave it.
 
-These two have to be evaluated separately. Retrieval quality is measured with recall@$k$ on a small hand-built question set. Generation quality is measured by reading answers and marking which claims are actually supported.
+These two have to be evaluated separately. Retrieval quality is measured with $\text{recall@}k$ on a small hand-built question set. Generation quality is measured by reading answers and marking which claims are actually supported.
 
 ## 2. Branch
 
@@ -49,8 +49,8 @@ The brief:
 > **Brief.** Build a small RAG pipeline over `data/raw/mdna.parquet`. Three files:
 >
 > 1. `src/rag/chunk.py` — `chunk_documents(df, chunk_tokens=500, overlap=50) -> pd.DataFrame` returning `(gvkey, fyear, chunk_id, text)`. Use the `transformers` tokenizer for the same model used in encoding so token counts line up.
-> 2. `src/rag/index.py` — `build_index(chunks, model_name="bert-base-uncased", store_path="data/interim/chroma")` that embeds each chunk and stores it in a Chroma collection. `query_index(query, k=5)` returns top-$k$ chunks with similarity scores.
-> 3. `src/rag/answer.py` — `answer_question(question, k=5, model="claude-sonnet-4-6") -> dict` that retrieves top-$k$, builds a prompt with each chunk numbered and tagged with its `(gvkey, fyear, chunk_id)`, calls Claude with instructions to cite chunks by number for every factual claim, and returns `{"answer": str, "cited_chunk_ids": list[int], "raw_response": str}`.
+> 2. `src/rag/index.py` — `build_index(chunks, model_name="bert-base-uncased", store_path="data/interim/chroma")` that embeds each chunk and stores it in a Chroma collection. `query_index(query, k=5)` returns $\text{top-}k$ chunks with similarity scores.
+> 3. `src/rag/answer.py` — `answer_question(question, k=5, model="claude-sonnet-4-6") -> dict` that retrieves $\text{top-}k$, builds a prompt with each chunk numbered and tagged with its `(gvkey, fyear, chunk_id)`, calls Claude with instructions to cite chunks by number for every factual claim, and returns `{"answer": str, "cited_chunk_ids": list[int], "raw_response": str}`.
 >
 > Then `notebooks/m13-rag.ipynb`:
 >

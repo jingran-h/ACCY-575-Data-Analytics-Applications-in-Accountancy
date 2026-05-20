@@ -6,17 +6,11 @@ In Modules 9 through 11 you fit a model. The model had parameters $\theta$, you 
 
 Mechanically, this is in-context learning. At inference time, the model conditions its next-token distribution on the entire prompt: your task description, the schema you want back, optional examples, and the document. The model's weights don't change. The prompt is doing the work that fine-tuning used to do.
 
-The thing to internalize: the prompt is your model. Two prompts that look like they say the same thing in different words can have measurably different agreement with ground truth. Treat prompt design the way you'd treat feature engineering. Iterate on it deliberately, measure what changes, version it.
+The thing to internalize: the prompt is your model. Two prompts that look like they say the same thing in different words can produce measurably different labels. Treat prompt design the way you'd treat feature engineering. Iterate on it deliberately, version it, and validate it on labels you trust before you commit to running it on the full corpus (§4 covers how).
 
-That raises an evaluation problem. With no training set, you also have no built-in test set. The only way to know whether the LLM is good enough is to hand-label a small evaluation set yourself and measure agreement. Cohen's $\kappa$ is the standard metric:
+Zero-shot is the right tool when the task needs rubric-level human judgment, but the volume makes labeling the whole corpus by hand impractical. The concrete accounting examples are everywhere: tagging every paragraph of a 10-K risk-factor section as regulatory vs. operational vs. financial; flagging going-concern language in an audit committee report; identifying related-party transactions buried in footnote disclosures; coding cybersecurity incidents under the SEC's Item 1C disclosure rules; classifying segment-disclosure paragraphs by business unit. Five years ago each of those was a graduate research project or a billable engagement; now each is a prompt that runs over the corpus in an afternoon.
 
-$$\kappa = \frac{p_o - p_e}{1 - p_e},$$
-
-where $p_o$ is observed agreement between the LLM and your labels, and $p_e$ is the agreement you'd expect by chance given the marginal distributions. $\kappa = 0$ is chance, $\kappa = 1$ is perfect. Above 0.7 is "usable for analysis." Above 0.8 is "comparable to a second human rater."
-
-Zero-shot is the right tool for open-vocabulary classification or extraction on text where labeled data doesn't exist and where you can write a clear rubric. Risk-factor classification. Forward-looking-statement detection. Named-entity extraction from disclosures. Sentiment when "sentiment" means something task-specific rather than the dictionary version.
-
-It's the wrong tool when you're time-sensitive on a fixed budget (you pay per API call), when something is safety-critical without human review (the LLM will be wrong sometimes), or when you have a labeled training set big enough to fine-tune a smaller model. A fine-tune is cheaper, deterministic, and lower-latency once you have the data for it.
+It's the wrong tool when latency matters (every label is a network round-trip and 1–3 seconds of API time), when the per-document cost is prohibitive at your scale (5,000 paragraphs at \$0.005 each is fine; 5,000,000 isn't), when the task is safety-critical and no human will review individual outputs (the LLM is wrong some fraction of the time, and you can't always tell which labels are the wrong ones from inspection alone), or when you already have a labeled training set big enough to fine-tune a smaller model. A fine-tune is cheaper per call, deterministic, and lower-latency once you have the data to train it on.
 
 ## 2. Branch
 
@@ -40,15 +34,13 @@ Yes, before you call the API even once.
 
 Build the paragraph-level frame (the agent brief in §5 includes this step). Then sample 80 to 100 paragraphs at random from `data/interim/mdna_paragraphs.parquet`. Label them yourself, in a CSV, by hand. Aim for 10–15 minutes of work; fast decisive labels, not perfect ones. Save to `data/eval/mdna_labels.csv` with columns `(gvkey, fyear, paragraph_id, label)`.
 
-This step has to come first. Skip it and run the LLM on the full corpus, and you have no way of knowing whether it's right. "It looked plausible on a few examples I spot-checked" is not a defensible standard. The hand-labeled eval is the only number that lets you say *"this LLM, with this prompt, agreed with my labels at $\kappa = 0.74$ on a sample of 100 paragraphs."* That sentence is what makes the rest of the analysis trustworthy.
+This step has to come first. Skip it and run the LLM on the full corpus, and you have no way of knowing whether it's right. "It looked plausible on a few examples I spot-checked" is not a defensible standard. The hand-labeled eval is the only number that lets you say *"this LLM, with this prompt, agreed with my labels at $\kappa = 0.74$ on a sample of 100 paragraphs."* Cohen's $\kappa$ is the standard agreement metric in inter-rater work: it corrects raw agreement for the rate you'd expect by chance given the class distribution, so 0 is chance-level and 1 is perfect. 0.7+ is the usable-for-analysis threshold; 0.8+ is "comparable to a second human rater." That single number is what makes the rest of the analysis trustworthy.
 
 ## 5. Brief the agent
 
 A word on why this module exists, before the brief.
 
-Classification and extraction over disclosure text is one of the fastest-growing parts of modern accounting and finance practice. Almost every textual-analysis task an analyst or auditor does used to be either manual labeling or dictionary methods. Manual labeling is expensive, slow, and inconsistent across labelers. Dictionary methods are rigid, brittle on synonyms, and fail on context. LLM zero-shot is the modern replacement for both. You write a rubric in English, point it at the documents, and get labels back that are often within rounding distance of a careful human rater.
-
-This shows up everywhere. Tagging a risk factor as regulatory vs. operational. Flagging going-concern language in the audit committee report. Identifying related-party transactions. Marking cybersecurity incidents under the SEC's Item 1C rules. Five years ago each of those was a research project; now each is a prompt.
+Classification and extraction over disclosure text is one of the fastest-growing parts of modern accounting and finance practice. The old options were manual labeling — expensive, slow, inconsistent across labelers — or dictionary methods, which are rigid, brittle on synonyms, and fail on context. LLM zero-shot is the modern replacement for both. You write a rubric in English, point it at the documents, and get labels back that are often within rounding distance of a careful human rater.
 
 The catch is that "often" isn't "always." A zero-shot classifier that agrees with you at $\kappa = 0.4$ is producing labels that aren't trustworthy for downstream analysis, and you have no way of telling which labels are which without a hand-labeled evaluation set. The methodology of this module — eval set first, prompt second, $\kappa$-gate third — is what lets you defend the labels in a research paper, an audit workpaper, or an SEC filing review. Skip the eval and report downstream results from unvalidated labels and you've done the kind of thing that gets a paper rejected at review or an audit finding overturned at the PCAOB.
 
@@ -124,7 +116,7 @@ gh pr create --title "M12: LLM zero-shot classification on MD&A" --body "$(cat <
 ## Summary
 - Adds `src/llm/classify.py` (Anthropic API, structured output, cached).
 - Hand-labeled eval set: 100 paragraphs.
-- Headline agreement: $\kappa = $ [0.7+ to be defensible]
+- Headline agreement: $\kappa$ = [your number — must be 0.7+ to be defensible]
 - Class label fed into M10 GBM as one-hot features; comparison in `results/m12/`.
 
 ## Caveats
