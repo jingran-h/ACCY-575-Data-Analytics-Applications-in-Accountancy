@@ -8,7 +8,7 @@ The minimal pipeline has five pieces.
 
 A chunker splits long documents into chunks small enough to retrieve and re-read individually — around 500 tokens, with a little overlap. An embedder turns each chunk into a dense vector, the same operation as Module 11 but at chunk granularity instead of document granularity. A vector store indexes those vectors so you can do fast nearest-neighbor lookup; FAISS, Chroma, or LanceDB are the common local options, Pinecone or Weaviate in the cloud. A retriever embeds an incoming user query and returns the top-$k$ most similar chunks, where similarity is usually cosine:
 
-$$\cos(\theta) \;=\; \frac{u \cdot v}{\|u\|\,\|v\|}.$$
+$$\cos(\theta) = \frac{u \cdot v}{\|u\|\,\|v\|}.$$
 
 And a generator — a frontier LLM — receives the query plus the retrieved chunks and produces an answer, ideally with citations to which chunks supported which claims.
 

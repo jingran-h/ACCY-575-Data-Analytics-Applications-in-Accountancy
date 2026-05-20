@@ -6,7 +6,7 @@ The point of BERT is to turn a piece of text into a vector. Earlier systems did 
 
 That conditioning happens inside the self-attention operation:
 
-$$\text{Attention}(Q, K, V) \;=\; \mathrm{softmax}\!\left(\frac{Q K^\top}{\sqrt{d_k}}\right) V.$$
+$$\text{Attention}(Q, K, V) = \mathrm{softmax}\!\left(\frac{Q K^\top}{\sqrt{d_k}}\right) V.$$
 
 For each token in the input, the model looks at every other token and decides how much each one matters for the current token's representation. A dozen of these layers stacked produces the rich context-conditional vectors people call "BERT embeddings."
 
@@ -119,7 +119,7 @@ The 768 embedding columns are a learned, dense representation. Dimension 47 has 
 
 The walkthrough above does the simplest thing: embeddings as features for a downstream regression. The same `encode_documents` cache is the foundation for every text task in Part 2, and a handful of variations sit on top of it. Each is roughly an evening of additional work.
 
-**Year-over-year MD&A change.** Encode each filing; the cosine distance between filing $t$ and $t-1$ is one scalar per firm-year. Cohen, Malloy, and Nguyen (2020, *Journal of Finance*) show that high-change MD&As predict negative returns. Add it as one feature.
+**Year-over-year MD&A change.** Encode each filing; the cosine distance between filing $t$ and $t-1$ is one scalar per firm-year. Cohen, Malloy, and Nguyen ("Lazy Prices," 2020, *Journal of Finance*) show that firms whose disclosures change substantially year-over-year subsequently underperform firms whose disclosures barely change. Add it as one feature.
 
 ```python
 from sklearn.metrics.pairwise import cosine_similarity

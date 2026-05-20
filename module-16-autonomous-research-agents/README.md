@@ -6,7 +6,7 @@
 
 Module 15 had you direct an agent through one analysis you specified: you wrote the question, you picked the method, you bounded the constraints, and the agent executed. The frontier of agentic AI is the level above that — *the agent decides the question, picks the method, runs the analysis, and writes the report,* with the human reviewing the output rather than directing the process. By the time you graduate, you will be reviewing this kind of output.
 
-The lab evidence is already in. Sakana's "AI Scientist" produces full machine-learning research papers end-to-end, one of which passed peer review at an ICLR workshop in 2025. James Zou's group at Stanford ran a *Virtual Lab* of agentic "scientists" that designed nanobody binders to SARS-CoV-2 spike protein variants and saw two of them validated in wet-lab experiments (Swanson, Wu, Bulaong, Pak, Zou, *Nature* 2025). Boiko, MacKnight, Kline, and Gomes (*Nature* 2023) built "Coscientist," an autonomous chemistry agent that planned and ran its own catalysis experiments. The Deep Research products from OpenAI, Anthropic, and Google all ship a consumer-grade version of the same loop.
+The lab evidence is already in. Sakana's "AI Scientist" produces full machine-learning research papers end-to-end, one of which passed peer review at the ICLR 2025 "I Can't Believe It's Not Better" workshop. James Zou's group at Stanford ran a *Virtual Lab* of agentic "scientists" that designed nanobody binders to SARS-CoV-2 spike protein variants and saw two of them validated in wet-lab experiments (Swanson, Wu, Bulaong, Pak, Zou, *Nature* 2025). Boiko, MacKnight, Kline, and Gomes (*Nature* 2023) built "Coscientist," an autonomous chemistry agent that planned and ran its own catalysis experiments. The Deep Research products from OpenAI, Anthropic, and Google all ship a consumer-grade version of the same loop.
 
 Accounting will get this slower than chemistry or biology — fewer wet-lab cycles to optimize, more interpretive judgment, and the disclosure-regulation environment is unforgiving of black-box claims. But it will get it. This module is the preview.
 
@@ -27,7 +27,7 @@ The lecture covers all of these at a high level. Pick three to read end-to-end b
 - **Boiko, D. A., MacKnight, R., Kline, B., & Gomes, G. (2023).** "Autonomous chemical research with large language models." *Nature*. The "Coscientist" system. Foundational paper for the autoresearch architecture you'll see in everything since.
 - **Schmidgall, S., et al. (2025).** "Agent Laboratory: Using LLM Agents as Research Assistants." *arXiv*. Open-source reference implementation of the autoresearch architecture; useful if you want to read code, not just papers.
 
-If you want a more critical view, read the Schmidt-Schreiber et al. (2025) evaluation of Sakana's AI Scientist — they argue the headline claims overstate what the system actually produces. Useful counterweight before you get carried away.
+If you want a more critical view, read **Beel et al. (2025), "Evaluating Sakana's AI Scientist: Bold Claims, Mixed Results, and a Promising Future?"** (arXiv:2502.14297) — they argue the headline claims overstate what the system actually produces. Useful counterweight before you get carried away.
 
 ## Materials
 

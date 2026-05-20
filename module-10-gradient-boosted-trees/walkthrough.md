@@ -4,11 +4,11 @@
 
 Gradient boosting builds a prediction function as a sum of small decision trees. Each new tree is trained to fix what the previous ones are still getting wrong:
 
-$$F_M(x) \;=\; \sum_{m=1}^{M} \nu \, h_m(x).$$
+$$F_M(x) = \sum_{m=1}^{M} \nu \, h_m(x).$$
 
 Here $h_m$ is the $m$-th tree and $\nu \in (0, 1]$ is the learning rate. The "gradient" piece refers to how each new tree gets fit. At step $m$, the algorithm computes the negative gradient of the loss against the current prediction,
 
-$$r_{i,m} \;=\; -\left[\frac{\partial L(y_i, F(x_i))}{\partial F(x_i)}\right]_{F = F_{m-1}},$$
+$$r_{i,m} = -\left[\frac{\partial L(y_i, F(x_i))}{\partial F(x_i)}\right]_{F = F_{m-1}},$$
 
 and fits $h_m$ to those pseudo-residuals. When the loss is squared error, the gradient is just $y_i - F_{m-1}(x_i)$, the residual. So in the most common case, gradient boosting is "fit a small tree to the residuals, add it in, repeat."
 

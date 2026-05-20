@@ -20,7 +20,7 @@ What you should reach for is an encoder transformer — BERT, FinBERT, or a more
 *The lecture covers what you need. These are here if you want to dig further.*
 
 - [Transformers Course — Encoder Models](https://huggingface.co/learn/nlp-course/) — Hugging Face. Short conceptual overview; read this before touching code.
-- [FinBERT (`yiyanghkust/finbert-tone`)](https://huggingface.co/yiyanghkust/finbert-tone) — Huang, Wang, and Yang (2022). Domain-tuned BERT for financial text; a useful baseline to compare against general-purpose BERT.
+- [FinBERT (`yiyanghkust/finbert-tone`)](https://huggingface.co/yiyanghkust/finbert-tone) — Huang, Wang, and Yang (2023), *Contemporary Accounting Research* 40(2). Domain-tuned BERT for financial text; a useful baseline to compare against general-purpose BERT.
 
 ## Materials
 

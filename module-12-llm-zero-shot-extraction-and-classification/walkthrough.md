@@ -10,7 +10,7 @@ The thing to internalize: the prompt is your model. Two prompts that look like t
 
 That raises an evaluation problem. With no training set, you also have no built-in test set. The only way to know whether the LLM is good enough is to hand-label a small evaluation set yourself and measure agreement. Cohen's $\kappa$ is the standard metric:
 
-$$\kappa \;=\; \frac{p_o - p_e}{1 - p_e},$$
+$$\kappa = \frac{p_o - p_e}{1 - p_e},$$
 
 where $p_o$ is observed agreement between the LLM and your labels, and $p_e$ is the agreement you'd expect by chance given the marginal distributions. $\kappa = 0$ is chance, $\kappa = 1$ is perfect. Above 0.7 is "usable for analysis." Above 0.8 is "comparable to a second human rater."
 

@@ -8,7 +8,7 @@ $$y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_k x_{ik} + \v
 
 and picks the coefficients that minimize the sum of squared residuals. The closed form is famous:
 
-$$\hat\beta \;=\; \arg\min_\beta \sum_{i=1}^{n} \big(y_i - x_i^\top \beta\big)^2 \;=\; (X^\top X)^{-1} X^\top y.$$
+$$\hat\beta = \arg\min_\beta \sum_{i=1}^{n} \big(y_i - x_i^\top \beta\big)^2 = (X^\top X)^{-1} X^\top y.$$
 
 A whole chapter of an econometrics text builds up to that one line. There are three things from that chapter worth keeping in your head while you read your own output.
 
@@ -39,7 +39,7 @@ git checkout -b feature/m9-ols
 
 Before you hand anything to the agent, be clear on the regression you're specifying. Target: next-year return on assets — `ni / at` led one year. Features: three current-year operating ratios (asset turnover, R&D intensity, operating cash flow margin), plus industry dummies built from `sich`. Three real variables, a fixed-effects block, a one-year-ahead outcome.
 
-This isn't an arbitrary spec. Predicting next-year ROA from current fundamentals is one of the most-replicated regressions in accounting. A version of it shows up everywhere real work happens. Equity analysts forecast next-year profitability before they forecast price; their starting point looks a lot like this regression. Auditors running analytical procedures under AU-C 520, or building a going-concern assessment under AU-C 570, need a defensible expectation of next year's profitability, and "industry-adjusted operating ratios predict next-year ROA" is exactly that kind of expectation. In academic accounting research, this family of regressions is the workhorse for asking how an accounting choice — a revenue recognition policy, capitalize-vs.-expense, an estimate — maps into future fundamentals. The DuPont decomposition you saw in intermediate financial accounting (Nissim and Penman 2001) is the conceptual ancestor of the feature set.
+This isn't an arbitrary spec. Predicting next-year ROA from current fundamentals is one of the most-replicated regressions in accounting. A version of it shows up everywhere real work happens. Equity analysts forecast next-year profitability before they forecast price; their starting point looks a lot like this regression. Auditors running analytical procedures under AU-C 520, or building a going-concern assessment under AU-C 570, need a defensible expectation of next year's profitability, and "industry-adjusted operating ratios predict next-year ROA" is exactly that kind of expectation. In academic accounting research, this family of regressions is the workhorse for asking how an accounting choice — a revenue recognition policy, capitalize-vs.-expense, an estimate — maps into future fundamentals. The modern DuPont decomposition (Nissim and Penman 2001) you saw in financial statement analysis is the conceptual ancestor of the feature set.
 
 The accounting part of all this is the interpretability requirement. A black-box model that predicts ROA accurately might be useful for trading. It's useless for an audit workpaper, a 10-K disclosure review, or a research paper, because nobody can defend the prediction in English. OLS is the baseline here because the coefficient is the deliverable, not the prediction.
 

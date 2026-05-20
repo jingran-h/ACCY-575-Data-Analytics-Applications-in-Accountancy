@@ -20,7 +20,7 @@ The point of this module isn't to make you reach for boosting on every problem �
 *The lecture covers what you need. These are here if you want to dig further.*
 
 - [Introduction to Boosted Trees](https://xgboost.readthedocs.io/en/stable/tutorials/model.html) — XGBoost developers. Short and clear conceptual write-up of the algorithm.
-- [SHAP documentation](https://shap.readthedocs.io/) — Lundberg et al. Reference for the interpretation library used in §6 of the walkthrough.
+- [SHAP documentation](https://shap.readthedocs.io/) — Lundberg and Lee (2017), *NeurIPS*. Reference for the interpretation library used in §6 of the walkthrough.
 
 ## Materials
 
