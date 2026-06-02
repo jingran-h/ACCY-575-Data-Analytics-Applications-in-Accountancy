@@ -40,6 +40,8 @@ Verify:
 git config --global --list
 ```
 
+*Optional further reading: [Pro Git, Chapters 1 & 2](https://git-scm.com/book/en/v2) (Chacon & Straub) — the canonical Git reference; "Getting Started" and "Git Basics" cover install, config, and the commit model in depth.*
+
 ## 2. Initialize a repo in your course project
 
 ```bash
@@ -109,6 +111,8 @@ This is why branches are cheap: they're pointers, not file copies.
 **Why bother**: try things without breaking working code; let multiple people work in parallel; review work as a unit (Module 3). Real example for this course: in Part 2 you'll want to try a different feature set or a different model on the WRDS dataset — branch off, experiment, then merge back if it works or throw the branch away if it doesn't.
 
 > **Word doc analogy:** the "approved version" lives in `main`. A branch is "let me try rewriting Section 3 without messing up the approved doc." If the rewrite works, merge it in. If not, delete the branch — main is untouched.
+
+*Optional further reading: [GitHub Flow](https://docs.github.com/en/get-started/using-github/github-flow) — GitHub's reference for the lightweight branch-and-merge workflow used throughout the course.*
 
 **Merging** brings a branch's changes into another (usually back into `main`):
 

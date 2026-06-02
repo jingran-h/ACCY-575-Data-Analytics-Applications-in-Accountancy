@@ -77,7 +77,11 @@ Now do the same for your pair partner's PR:
    - **One praise** — what did they do well?
 4. At the bottom of the **Files changed** view, click *Review changes* → choose *Comment* (or *Approve* if you'd vouch for it as-is) → submit.
 
+*Optional further reading: [Google's Code Review Developer Guide](https://google.github.io/eng-practices/review/) — the industry-standard playbook for both sides of a review; the Reviewer and Author sections are each short.*
+
 Reviewing real human-written code (not your own) is the muscle that lets you evaluate AI-generated code in Part 2. Same skill, different author.
+
+*Optional further reading: "Lessons from millions of AI code reviews" (Graphite blog — search the title; the URL changes occasionally) — how the review feedback loop shifts once an AI is the author.*
 
 ## 5. Merge the PR
 

@@ -16,6 +16,8 @@ cd ..        # go up one level
 
 Try each one. Get muscle memory.
 
+*Optional further reading: [The Missing Semester — "The Shell"](https://missing.csail.mit.edu/2020/course-shell/) (MIT) — a 30-minute primer that goes well beyond these four commands for anyone who'll live in a terminal.*
+
 ## 2. Install VS Code
 
 Download from [code.visualstudio.com](https://code.visualstudio.com/) and install. Open it once.
@@ -35,6 +37,8 @@ First, a definition. A **Python package** is a reusable bundle of code somebody 
 - **Reproducibility.** `uv.lock` records exact versions, so anyone who clones your project ends up with the same environment.
 - **Standards-based.** Uses `pyproject.toml` (the Python community standard). Your project stays compatible with everyone else's tooling instead of being locked into one ecosystem.
 - **Simpler.** One tool, one mental model. No more "should I use `pip` or `conda` or `pyenv`?" for any given task.
+
+*Optional further viewing: [uv: An Extremely Fast Python Package Manager](https://youtu.be/gSKTfG1GXYQ) — Charlie Marsh, the creator of `uv`, on why it exists and how it works (~25 min).*
 
 ### How `uv`, `venv`, Python, conda, and VS Code fit together
 
@@ -71,6 +75,8 @@ uv --version
 ```
 
 If you see a version number, you're set. If `command not found`, restart the terminal and try again.
+
+*Optional further reading: [uv — Getting Started](https://docs.astral.sh/uv/getting-started/) (Astral) — the official docs; handy as a reference once you're using `uv` daily.*
 
 ## 4. Pick where your code will live
 
@@ -191,6 +197,8 @@ Press `F5` (or Run menu → Start Debugging). Choose "Python File" if prompted.
 Execution pauses at your breakpoint. In the **Variables** panel on the left, expand **Locals** to see `name` and `greeting`.
 
 Far more powerful than `print()` debugging — you can inspect any variable at any execution point without changing your code.
+
+*Optional further reading: [VS Code — Python Tutorial](https://code.visualstudio.com/docs/python/python-tutorial) (Microsoft) — goes deeper into IntelliSense, the debugger, and other Python-specific editor features.*
 
 ## 10. Read a stack trace
 

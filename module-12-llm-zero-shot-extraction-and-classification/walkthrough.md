@@ -6,6 +6,8 @@ In Modules 9 through 11 you fit a model. The model had parameters $\theta$, you 
 
 Mechanically, this is in-context learning. At inference time, the model conditions its next-token distribution on the entire prompt: your task description, the schema you want back, optional examples, and the document. The model's weights don't change. The prompt is doing the work that fine-tuning used to do.
 
+*Optional further viewing: 3Blue1Brown, [Large Language Models explained briefly](https://youtu.be/LPZh9BOjkQs) (~8 min) — an animated primer on the mechanics this paragraph leans on: an LLM as a function predicting a probability distribution over the next token, pretraining at scale, and the transformer/attention architecture underneath. Intuition only; not required.*
+
 The thing to internalize: the prompt is your model. Two prompts that look like they say the same thing in different words can produce measurably different labels. Treat prompt design the way you'd treat feature engineering. Iterate on it deliberately, version it, and validate it on labels you trust before you commit to running it on the full corpus (§4 covers how).
 
 Zero-shot is the right tool when the task needs rubric-level human judgment, but the volume makes labeling the whole corpus by hand impractical. The concrete accounting examples are everywhere: tagging every paragraph of a 10-K risk-factor section as regulatory vs. operational vs. financial; flagging going-concern language in an audit committee report; identifying related-party transactions buried in footnote disclosures; coding cybersecurity incidents under the SEC's Item 1C disclosure rules; classifying segment-disclosure paragraphs by business unit. Five years ago each of those was a graduate research project or a billable engagement; now each is a prompt that runs over the corpus in an afternoon.
@@ -85,6 +87,8 @@ The brief:
 > `uv add anthropic scikit-learn`. The `ANTHROPIC_API_KEY` lives in `.env`, same way you handled secrets in Module 4.
 
 The non-obvious moves in this brief are worth understanding before you hand it over. Structured output via tool use forces the API to return valid JSON conforming to your schema; without it you're parsing the model's prose and missing 5% of edge cases where it decides to be helpful and explain its reasoning, breaking your parser. Caching by hash of `(model, prompt_template_version, text)` means bumping the prompt invalidates the cache automatically. Without versioning you'd rerun the eval and get the cached old-prompt results back without realizing. Holding out the in-context examples matters because if you don't, you're measuring how well the model copies its own demonstrations, which is a useless number. And the $\kappa \ge 0.7$ gate is non-negotiable. If the model isn't good enough, you don't get to use it. Pretending otherwise is academic dishonesty in research and a career-ender in audit.
+
+*Optional further reading: Anthropic's [tool use and structured outputs](https://docs.claude.com/en/docs/build-with-claude/tool-use) is how you force the API to return schema-conformant JSON — exactly the mechanism the brief calls for; OpenAI's [structured outputs](https://platform.openai.com/docs/guides/structured-outputs) is the same concept from a different vendor.*
 
 ## 6. Iterate on the prompt, not the cache
 

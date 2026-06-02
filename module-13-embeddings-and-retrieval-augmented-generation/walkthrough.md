@@ -12,6 +12,8 @@ $$\cos(\theta) = \frac{u \cdot v}{\|u\| \cdot \|v\|}.$$
 
 And a generator — a frontier LLM — receives the query plus the retrieved chunks and produces an answer, ideally with citations to which chunks supported which claims.
 
+*Optional further reading: [LlamaIndex documentation](https://docs.llamaindex.ai/) — a production framework that wires these same five pieces together; the architecture page is the entry point (broad reference for the whole pipeline).*
+
 Two failure modes are specific to RAG, and you'll see both. Retrieval can miss: the relevant chunk is in the index but doesn't make the $\text{top-}k$, and the generator either honestly says "I don't know" (best case) or hallucinates from whatever irrelevant chunks it got (worst case). Generation can be ungrounded: retrieval was fine, but the generator wrote something the retrieved chunks don't support. That happens when the LLM "knows" the answer from training and isn't actually checking the context you gave it.
 
 These two have to be evaluated separately. Retrieval quality is measured with $\text{recall@}k$ on a small hand-built question set. Generation quality is measured by reading answers and marking which claims are actually supported.
@@ -80,6 +82,8 @@ If the top results are obviously off-topic, your retriever is broken. Could be b
 ## 6. Evaluate retrieval and generation separately
 
 For retrieval, run all eval questions and compute recall@5. A small RAG with a general-purpose embedder typically lands at recall@5 between 0.6 and 0.8 on a corpus this size. Below 0.5 means the retriever needs work — bigger chunks, better embedder, or a reranker stage. Above 0.9, double-check that your gold chunks aren't trivially keyword-matchable in a way that overstates the result.
+
+*Optional further reading: [Contextual retrieval](https://www.anthropic.com/news/contextual-retrieval) — Anthropic's practical write-up on prepending context to chunks and adding a reranker to lift recall.*
 
 For generation, read each answer. Does every factual claim have a citation? Does the cited chunk actually contain the claim? If the retrieved chunks didn't contain the answer, did the model say so, or did it hallucinate?
 

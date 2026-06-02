@@ -68,6 +68,8 @@ Your access for this course comes through a **WRDS Education Classroom account**
 
 The instructor sets up the class on the WRDS side and gives you a **Class Code** (a short alphanumeric token) at the start of Module 8. You use that code to enroll. Without it you can't get in — registering as a generic individual on `wrds-www.wharton.upenn.edu` will not give you the access this course assumes.
 
+*Optional further reading: [WRDS Student Guide: Enrolling in a Class Account](https://wrds-www.wharton.upenn.edu/pages/about/wrds-account-types/student-guide-enrolling-in-a-class-account/) — the canonical step-by-step for the enrollment flow below.*
+
 ### 2a. If you have no WRDS account yet
 
 1. Go directly to the class-student registration form: <https://wrds-www.wharton.upenn.edu/register/?user_type=class-student>. The user-type radio button arrives pre-selected to "Class - Students with Code."
@@ -161,6 +163,8 @@ Working in a raw SSH terminal is fine for a quick visit. For anything beyond tha
 
 This is the same pattern Big Four data teams use to work on regulated datasets that aren't allowed to leave a hardened environment. Worth one setup.
 
+*Optional further reading: [Remote Development using SSH](https://code.visualstudio.com/docs/remote/ssh) — Microsoft's official docs for the Remote-SSH extension, if you want the full feature set beyond what §4 uses.*
+
 ### 4a. Install the extension
 
 Open VS Code locally → **Extensions** sidebar → search `Remote - SSH` → install Microsoft's official one (publisher: *Microsoft*, ID `ms-vscode-remote.remote-ssh`).
@@ -243,6 +247,8 @@ ls -l ~/.pgpass
 ```
 
 > **Why not put credentials in `.env`?** `.env` is fine if you read it into Python explicitly. `.pgpass` is the Postgres-native mechanism — the `wrds` client picks it up automatically with no code change, and it's a system-wide credential rather than a per-project one. Both are acceptable; `.pgpass` is the WRDS-recommended path.
+
+*Optional further reading: [Python on the WRDS Cloud](https://wrds-www.wharton.upenn.edu/pages/grid-items/python-wrds-cloud/) — WRDS's own reference for the `wrds` client and `.pgpass` setup.*
 
 ## 7. Install the Python tooling
 
@@ -360,6 +366,8 @@ Read the file the agent produces. Then run it — this is the long step, plan fo
 ```bash
 uv add sec-parser
 ```
+
+*Optional further reading: [`sec-parser`](https://pypi.org/project/sec-parser/) — Alphanome.AI's 10-K-aware parser, the package doing the Item 7 extraction in Stage 2.*
 
 (`uv` is preinstalled on WRDS Cloud; if it isn't, `pip install --user uv` first.)
 

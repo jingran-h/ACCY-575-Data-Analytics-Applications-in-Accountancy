@@ -12,6 +12,8 @@ $$\hat\beta = \arg\min_\beta \sum_{i=1}^{n} \big(y_i - x_i^\top \beta\big)^2 = (
 
 A whole chapter of an econometrics text builds up to that one line. There are three things from that chapter worth keeping in your head while you read your own output.
 
+*Optional further reading: Mostly Harmless Econometrics, ch. 3 (Angrist & Pischke) — the classic treatment of OLS in applied work, written for economists but reads cleanly.*
+
 One: the model is linear in $\beta$, not in the variables. You can throw $x^2$, $\log x$, interactions, and dummies into the right-hand side and it's still "linear regression." So when someone tells you OLS can't handle non-linearity, they mean OLS can't handle non-linearity in the coefficients. Non-linearity in the variables is fine.
 
 Two: $\hat\beta_k$ is the expected change in $y$ for a one-unit change in $x_k$, holding the rest of the regressors fixed. The "holding fixed" part is the whole game. Change what's in the regression and every coefficient can shift. Reading a single coefficient without thinking about what else is on the right-hand side will mislead you.
@@ -85,6 +87,8 @@ What to look at in the OLS output:
 | **Residuals vs fitted** | Should look like a featureless cloud around zero. | A funnel ⇒ heteroskedasticity. You have HC3, but consider logging the target. |
 | **Q-Q plot** | Should hug the diagonal. | Heavy tails ⇒ outliers; consider winsorizing. |
 | **Leverage plot** | A few high-leverage points are normal. | If one or two points dominate, the result is *those points*, not the population. |
+
+*Optional further reading: [statsmodels OLS reference](https://www.statsmodels.org/stable/regression.html) — the library the agent uses to fit the model; its diagnostic-plots section maps directly onto the four plots in the table above.*
 
 Pick the coefficient you actually care about and write the result in plain English: *"A 1-percentage-point increase in R&D intensity is associated with a [X]-percentage-point change in next-year ROA, holding turnover and operating margin fixed."* If you can't write that sentence without looking at the code, you don't yet understand your own regression.
 

@@ -14,6 +14,8 @@ How did the model learn this? Pretraining on a few billion words of BookCorpus a
 
 There are two things you can pull out of the model. One is a vector per token — an $\mathbb{R}^{768}$ vector for each input token, in `bert-base`. That's what you'd use for token-level tasks like named-entity recognition. The other is a vector per document. That's what we want here. The standard way to get the document vector is to mean-pool the token vectors, skipping padding positions. BERT was trained to put a sentence-level summary in the special `[CLS]` token and you can use that, but on long documents mean-pool is more robust.
 
+*Optional further reading: [Hugging Face Transformers Course — encoder models](https://huggingface.co/learn/nlp-course/) — a short conceptual tour of how encoder transformers like BERT produce their vectors; a good primer before touching code.*
+
 The wall is 512 tokens. That's about 400 words of English. A 10-K MD&A runs several thousand words, so you have to deal with it.
 
 Three ways out. The cheap one is to truncate to the first 512 tokens, which works if the document front-loads its content (filings usually do). The honest one is to chunk into 512-token pieces and mean-pool the chunk vectors. The expensive one is to swap in a long-context model like Longformer, BigBird, or `nomic-embed-text-v1.5` with its 8K window. Part 2 uses chunking. If your text is short to begin with (analyst headlines, press release titles), truncation is fine.
@@ -33,6 +35,8 @@ git checkout main && git pull && git checkout -b feature/m11-bert
 | `nomic-embed-text-v1.5` | 137M | Modern long-context (8K) embedder. Skips the chunking step entirely. |
 
 Default to `bert-base-uncased`. If you want a comparison, run both. The marginal cost on a few thousand documents is small.
+
+*Optional further reading: [FinBERT model card (`yiyanghkust/finbert-tone`)](https://huggingface.co/yiyanghkust/finbert-tone) — Huang, Wang, and Yang (2023), a finance-domain-tuned BERT; a useful baseline to compare against general-purpose `bert-base`.*
 
 ## 4. Brief the agent
 

@@ -42,6 +42,8 @@ TransactionSchema.validate(df)
 
 If the data violates the schema, `pandera` raises a detailed report — which row, which column, which constraint.
 
+*Optional further reading: [pandera Quickstart](https://pandera.readthedocs.io/en/stable/) — the library's own reference for lightweight schema validation on pandas DataFrames.*
+
 ## 3. Set random seeds (everywhere)
 
 If your analysis uses any randomness — sampling, train/test split, simulation — set the seed at the top of the script:
@@ -55,6 +57,8 @@ np.random.seed(42)
 ```
 
 Run your analysis twice. The output should be identical bit-for-bit. If it isn't, you have unseeded randomness somewhere — find it.
+
+*Optional further reading: [The Turing Way — Guide for Reproducible Research](https://the-turing-way.netlify.app/) — broad community guide on reproducibility; its Reproducible Research chapter is the entry point for the practices in this module.*
 
 ## 4. Sort before you aggregate
 
@@ -91,6 +95,8 @@ uv run pytest
 ```
 
 Green dots = passing. If not, fix the function or the test.
+
+*Optional further reading: [pytest — Get Started](https://docs.pytest.org/en/stable/getting-started.html) — pytest's own quickstart; the first ten minutes gets you most of the value.*
 
 ## 6. Snapshot test for analysis results
 

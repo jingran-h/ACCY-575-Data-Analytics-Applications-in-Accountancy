@@ -12,6 +12,8 @@ $$r_{i,m} = -\left[\frac{\partial L(y_i, F(x_i))}{\partial F(x_i)}\right]_{F = F
 
 and fits $h_m$ to those pseudo-residuals. When the loss is squared error, the gradient is just $y_i - F_{m-1}(x_i)$, the residual. So in the most common case, gradient boosting is "fit a small tree to the residuals, add it in, repeat."
 
+*Optional further reading: [Introduction to Boosted Trees](https://xgboost.readthedocs.io/en/stable/tutorials/model.html) (XGBoost docs) — a short, clear derivation of the same additive-tree algorithm, including the regularized objective.*
+
 Three knobs do most of the work. `n_estimators` is the number of trees; more helps until it overfits. `learning_rate` is how much each tree contributes; lower values are more conservative and need more trees to compensate. `max_depth` is the per-tree complexity, where 4 to 8 is the sweet spot for tabular finance data. Beyond that, trees start memorizing.
 
 Gradient boosting dominates tabular work because it asks for almost nothing. No feature scaling. No imputation — it learns which side of a split missing values go to. Non-linear interactions get picked up automatically, which is exactly where OLS leaves signal on the table. On Kaggle-style tabular problems it has, for years, beaten linear models and deep nets both.
@@ -95,6 +97,8 @@ If GBM is meaningfully better, the next question is why. Start with the SHAP sum
 Worth one paragraph in your write-up, because graders want to know you know:
 
 > SHAP values decompose each prediction into per-feature contributions that sum to the model's deviation from the average prediction. They're an attribution tool, not a causal one. A SHAP value of +0.02 for `xrd/at` on firm $i$ does not mean "if firm $i$ raised R&D intensity by one unit, ROA would be 0.02 higher." It means "given what the model has learned, firm $i$'s R&D intensity is contributing +0.02 to the model's prediction relative to the average firm." For causal claims, OLS with an identification strategy — or the causal-ML methods you won't see until graduate work — is what you reach for.
+
+*Optional further reading: [SHAP documentation](https://shap.readthedocs.io/) (Lundberg and Lee, 2017) — the reference for the interpretation library, including the summary plot used in §5.*
 
 ## 7. Light robustness pass
 

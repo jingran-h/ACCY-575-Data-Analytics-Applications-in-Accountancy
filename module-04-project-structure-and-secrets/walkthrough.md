@@ -20,6 +20,8 @@ Four things to know:
 - `dependencies` — what `uv add` writes to.
 - `[project]` is one *table*. Other tools (`ruff`, `pytest`, `mypy`) get their own under `[tool.<name>]`.
 
+*Optional further reading: [Packaging Python Projects](https://packaging.python.org/en/latest/tutorials/packaging-projects/) (PyPA) — the full reference for `pyproject.toml` fields and project layout when you eventually want to publish or share a package.*
+
 ## 2. Move to a real project layout
 
 Right now your project has just `main.py` at the top. As soon as a project has more than one file, organize it:
@@ -72,6 +74,8 @@ An **API key** is a long string of characters that identifies your account when 
 This is why leaking an API key is a real incident, not a theoretical one. Bad actors scrape public GitHub repositories for leaked keys and run up charges (or worse) on your account before you notice. The single rule for this section: **never put an API key directly in your code, and never commit one to Git.**
 
 The standard pattern is `.env` — a file that lives only on your machine, listed in `.gitignore` so Git never sees it, that your code reads from at runtime.
+
+*Optional further reading: [The Twelve-Factor App — III. Config](https://12factor.net/config) (Adam Wiggins) — the classic short argument for keeping config and secrets in the environment rather than in code.*
 
 In your project root:
 

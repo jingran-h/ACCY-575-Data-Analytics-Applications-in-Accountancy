@@ -8,6 +8,8 @@ Most modern PDFs already contain a text layer. The file is a series of placed gl
 
 The other category is image PDFs: a page is a bitmap, no text layer underneath. Scanned audit workpapers fall here. So do paper-form K-1s, invoices a client emailed you after running them through their copier, and pre-1994 SEC filings. To get text out, you have to actually run OCR — pixel pattern matching against a character library, plus a language model to disambiguate uncertain regions. Tesseract is the open-source workhorse here. It started as an HP Labs research project in 1985, sat proprietary for two decades, was open-sourced in 2005, and was sponsored by Google from 2006 until 2017; the project is community-maintained since. LlamaParse and GCP Document AI run the same kind of OCR engine underneath, but layer LLM post-processing on top to clean up obvious recognition mistakes.
 
+*Optional further reading: [Tesseract OCR documentation](https://tesseract-ocr.github.io/tessdoc/) — the open-source baseline you can run locally, and the floor your paid services should clearly beat.*
+
 The harder problem on both kinds of PDF is layout. A multi-column page read top-to-bottom-left-to-right gives you complete nonsense. A table flattened into a single text stream loses its rows-and-columns structure, which destroys any downstream extraction that depends on cells lining up. Headers, footers, page numbers, and footnotes interleaved with body text contaminate every paragraph. The reason "document parsing" is a phrase distinct from "OCR" is that the layout problem is what separates a tool that produces *usable* text from one that produces dump-the-glyphs-in-a-pile text.
 
 LlamaParse and GCP Document AI both do layout-aware parsing. They detect tables and return them as structured data, they preserve reading order across columns, and they separate body text from page furniture. Tesseract gives you the dump-the-glyphs pile. That's the qualitative difference you'll see when you compare them in §6.
@@ -29,6 +31,8 @@ Three options worth knowing for an accounting workflow:
 | **Tesseract** | Free, runs locally | No data leaves your machine; can run on WRDS Cloud; no API key | Weak on layout and tables; no LLM post-processing; the floor your paid services should beat |
 
 For an audit engagement where the documents can't leave the client's environment, Tesseract running on a client-controlled VM is the default. For research or assignment work where the documents are public anyway, LlamaParse is the easier starting point. GCP Document AI is what you reach for when you specifically need the form processors — invoice fields parsed into a structured `{vendor, date, line_items}` dict, that kind of thing.
+
+*Optional further reading: [Google Cloud Document AI](https://cloud.google.com/document-ai) — enterprise OCR with specialized processors for invoices, receipts, contracts, and other form-type documents.*
 
 The walkthrough defaults to LlamaParse for the brief. §6 has you compare all three on the same documents so you have a feel for the quality difference.
 
@@ -77,12 +81,16 @@ The brief:
 
 Three deliberate choices in this brief worth understanding. Caching by `(tool, file_contents)` hash, not by file path, because the same file can sit at different paths and you don't want to re-parse it. Forcing a parsing instruction on LlamaParse ("preserve tables, treat as financial filing"), because the default behavior treats every document generically and flattens tables. And reusing the Module 13 chunker rather than building a new one, because if the chunk sizes don't match across modules, queries that hit content added in this module will retrieve oddly sized chunks compared to queries that hit the original M13 content.
 
+*Optional further reading: [LlamaParse documentation](https://www.llamaindex.ai/llamaparse) — the "supported file types" and "parsing instructions" pages are the most relevant for tuning the brief above.*
+
 ## 5. Pick your test documents
 
 A short opinionated list of document sources that exercise different OCR regimes:
 
 - **A modern 10-K from a Compustat firm.** Pull a recent 10-K from EDGAR. It's a digital PDF with tables, so it tests layout-aware parsing without testing OCR proper. Quality should be near-perfect.
 - **A pre-1994 SEC filing.** Find one through EDGAR's full-text search filtered to before 1994. These are scanned image PDFs. This is what tests real OCR.
+
+  *Optional further reading: [SEC EDGAR full-text search](https://efts.sec.gov/LATEST/search-index?q=&dateRange=custom&startdt=1990-01-01&enddt=1994-01-01) — context for which filings predate machine-readable text.*
 - **A scanned audit-style document.** A sample invoice, lease, or contract. Google Cloud's documentation has a few [sample documents](https://cloud.google.com/document-ai/docs/samples) you can use; otherwise, scan a printed page yourself.
 - **A document with a complex table.** A 10-K's Item 5 (Selected Financial Data) or any page heavy with structured numerical content. This is what separates layout-aware tools from naive ones.
 

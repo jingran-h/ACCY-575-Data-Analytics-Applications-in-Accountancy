@@ -15,6 +15,8 @@ loop:
 until the agent decides the task is complete (or you stop it)
 ```
 
+*Optional further reading: [OpenAI Agents SDK guide](https://platform.openai.com/docs/guides/agents) — alternative tooling that implements this same agent-loop pattern, if you want to see it framed in a different stack.*
+
 The math isn't the interesting part here. The operational details are.
 
 The agent executes real commands on your machine. Files get written, shells run, network requests go out. That's a different beast from a chatbot suggesting code you copy-paste, and it changes how careful you have to be.
@@ -57,6 +59,8 @@ Whichever agent you're using, before you start the run:
 | **Secrets** | `.env` and `~/.pgpass` should be readable by the agent if it needs the WRDS connection or the API key. They should **never** be writable, copied, or echoed in commit messages. Watch for this in the diff. |
 
 Open the agent in your project. Confirm it reports the working directory and the permission mode you expect.
+
+*Optional further reading: [Claude Code documentation](https://docs.claude.com/en/docs/claude-code) — the "permission modes" and "sub-agents" pages cover exactly the settings you're configuring here.*
 
 ## 5. Write the brief
 
@@ -114,6 +118,8 @@ Save the brief itself to `docs/m15-brief.md` and commit it on the branch. It is 
 Hand the brief to the agent. Watch every action.
 
 What supervision actually means: read each shell command before approving it. `pip install xgboost` is fine. `curl` to an unfamiliar URL is not. `pip install something-with-a-typo` is not. `git push` before you've reviewed the PR is not. Watch the file edits. Most agents show you a diff before writing; read it. If the agent is rewriting a Module 8–14 file when the brief said don't, stop it.
+
+*Optional further reading: [Module 6's prompt-injection section](../module-06-ai-assisted-coding-and-debugging/walkthrough.md#6-recognize-prompt-injection) — more relevant here, not less: an agent with shell access plus untrusted text (MD&A, scraped filings) in context is the canonical injection risk this supervision step defends against.*
 
 Stop when something feels wrong. "Feels wrong" is a real signal. Usually it means the agent's plan diverged from the brief and is heading somewhere expensive. Fixing it cheaply now beats reverting later.
 
