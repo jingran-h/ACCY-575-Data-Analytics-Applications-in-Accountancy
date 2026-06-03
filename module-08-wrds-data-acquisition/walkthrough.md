@@ -248,7 +248,7 @@ ls -l ~/.pgpass
 
 > **Why not put credentials in `.env`?** `.env` is fine if you read it into Python explicitly. `.pgpass` is the Postgres-native mechanism — the `wrds` client picks it up automatically with no code change, and it's a system-wide credential rather than a per-project one. Both are acceptable; `.pgpass` is the WRDS-recommended path.
 
-*Optional further reading: [Python on the WRDS Cloud](https://wrds-www.wharton.upenn.edu/pages/grid-items/python-wrds-cloud/) — WRDS's own reference for the `wrds` client and `.pgpass` setup.*
+*Optional further reading: [Using Python on the WRDS Platform](https://wrds-www.wharton.upenn.edu/pages/grid-items/using-python-wrds-platform/) — WRDS's own reference for the `wrds` client and `.pgpass` setup.*
 
 ## 7. Install the Python tooling
 

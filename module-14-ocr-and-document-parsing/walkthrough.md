@@ -26,7 +26,7 @@ Three options worth knowing for an accounting workflow:
 
 | Tool | Cost | Strengths | Weaknesses |
 |---|---|---|---|
-| **LlamaParse** | Free tier ~10,000 credits/month (≈1,000–10,000 pages depending on parse mode); paid above | Strong table extraction; designed for downstream RAG; minimal setup; supports prompt-style parsing instructions | Hosted — documents leave your machine; credit costs vary by parse mode (Fast / Cost-effective / Premium) |
+| **LlamaParse** | Free tier ~10,000 credits/month (≈1,000–10,000 pages depending on parse mode); paid above | Strong table extraction; designed for downstream RAG; minimal setup; supports prompt-style parsing instructions | Hosted — documents leave your machine; credit costs vary by parse mode (Fast / Cost-effective / Agentic / Agentic Plus) |
 | **GCP Document AI** | ~\$1.50 per 1,000 pages base; more for specialized processors | Most accurate on forms; specialized processors for invoices, receipts, contracts, W-2s, 1099s; PII / HIPAA compliance options | GCP project setup; per-page billing; more work to wire up than LlamaParse |
 | **Tesseract** | Free, runs locally | No data leaves your machine; can run on WRDS Cloud; no API key | Weak on layout and tables; no LLM post-processing; the floor your paid services should beat |
 
@@ -45,6 +45,11 @@ Modules 9 through 13 ran on clean text because WRDS handed it to you that way. T
 OCR is the first step in turning all of that into something the rest of the pipeline can use. Once you have clean text, every method from Modules 9 through 13 applies. The classifier from Module 12 can tag risk factors from OCR'd disclosure text. The RAG system from Module 13 can index OCR'd exhibits. Without the OCR step, those methods only work on a subset of the documents that actually matter.
 
 The demo does the smallest version of this that's still real. You'll pick five or ten test PDFs — a mix of digital and scanned, with at least one document that contains a table — and parse them through LlamaParse. You'll spot-check the quality of the output, then re-run a subset through GCP Document AI and Tesseract for comparison. Finally you'll take the LlamaParse output and append it to the Module 13 Chroma index, then run a few eval queries that target the newly-added content. By the end you have a parser that turns arbitrary PDFs into searchable text in your existing RAG system.
+
+Set up two services before you brief the agent, both following the `.env` discipline from [Module 4 §3](../module-04-project-structure-and-secrets/walkthrough.md#3-set-up-env-for-secrets) (key in `.env`, `.env` gitignored, never pasted into code):
+
+- **LlamaParse.** Sign up at [cloud.llamaindex.ai](https://cloud.llamaindex.ai) and generate an API key (it starts with `llx-`) → `LLAMA_CLOUD_API_KEY` in `.env`. The free tier (~10,000 credits/month) more than covers this module.
+- **GCP Document AI** is heavier — budget about 15 minutes. In the [Google Cloud console](https://console.cloud.google.com): create a project (its ID is your `GCP_PROJECT_ID`), enable **billing** and the **Document AI API**, then create a **Document OCR** processor in a region — its ID is your `GCP_PROCESSOR_ID`. For authentication the client uses Application Default Credentials: the simplest path is `gcloud auth application-default login` (no key file to leak); alternatively create a service account, download its JSON key, and point `GOOGLE_APPLICATION_CREDENTIALS` at it — treating that JSON as a secret you keep out of Git. New Google Cloud accounts get free credit that easily covers this module's page count.
 
 The brief:
 
@@ -77,7 +82,7 @@ The brief:
 >
 > Add `tests/test_parse.py` with one passing test on a tiny known PDF (the brief should generate this fixture if it doesn't exist), checking that `text` contains some expected substring.
 >
-> `uv add llama-parse google-cloud-documentai pytesseract pdf2image`. The `LLAMA_CLOUD_API_KEY`, `GCP_PROJECT_ID`, `GCP_PROCESSOR_ID` live in `.env`. Do **not** modify Modules 8–13 code, but **do** import `chunk_documents` and `build_index` from `src.rag` (Module 13).
+> `uv add llama-parse google-cloud-documentai pytesseract pdf2image`. The `LLAMA_CLOUD_API_KEY`, `GCP_PROJECT_ID`, and `GCP_PROCESSOR_ID` live in `.env`; the GCP client authenticates through Application Default Credentials (`gcloud auth application-default login`, or a service-account JSON pointed to by `GOOGLE_APPLICATION_CREDENTIALS`). Do **not** modify Modules 8–13 code, but **do** import `chunk_documents` and `build_index` from `src.rag` (Module 13).
 
 Three deliberate choices in this brief worth understanding. Caching by `(tool, file_contents)` hash, not by file path, because the same file can sit at different paths and you don't want to re-parse it. Forcing a parsing instruction on LlamaParse ("preserve tables, treat as financial filing"), because the default behavior treats every document generically and flattens tables. And reusing the Module 13 chunker rather than building a new one, because if the chunk sizes don't match across modules, queries that hit content added in this module will retrieve oddly sized chunks compared to queries that hit the original M13 content.
 
@@ -88,11 +93,9 @@ Three deliberate choices in this brief worth understanding. Caching by `(tool, f
 A short opinionated list of document sources that exercise different OCR regimes:
 
 - **A modern 10-K from a Compustat firm.** Pull a recent 10-K from EDGAR. It's a digital PDF with tables, so it tests layout-aware parsing without testing OCR proper. Quality should be near-perfect.
-- **A pre-1994 SEC filing.** Find one through EDGAR's full-text search filtered to before 1994. These are scanned image PDFs. This is what tests real OCR.
-
-  *Optional further reading: [SEC EDGAR full-text search](https://efts.sec.gov/LATEST/search-index?q=&dateRange=custom&startdt=1990-01-01&enddt=1994-01-01) — context for which filings predate machine-readable text.*
+- **A phone photo or fax of a document.** Uneven lighting, skew, low resolution — tax clients email exactly these (a photographed K-1, W-2, or 1099). This stresses real OCR harder than a clean flatbed scan does.
 - **A scanned audit-style document.** A sample invoice, lease, or contract. Google Cloud's documentation has a few [sample documents](https://cloud.google.com/document-ai/docs/samples) you can use; otherwise, scan a printed page yourself.
-- **A document with a complex table.** A 10-K's Item 5 (Selected Financial Data) or any page heavy with structured numerical content. This is what separates layout-aware tools from naive ones.
+- **A document with a complex table.** A 10-K's Item 8 (Financial Statements and Supplementary Data) or any page heavy with structured numerical content. This is what separates layout-aware tools from naive ones.
 
 Five to ten total is enough. Save them to `data/raw/test_docs/`.
 
@@ -123,7 +126,7 @@ This step is what makes the module real. Without it, OCR is just an isolated too
 
 ## 8. Cost calibration
 
-Quick numbers to keep in your head — verify these against the live pricing pages before relying on them, since both LlamaParse and GCP adjust their tiers without much notice. LlamaParse's free tier is currently around 10,000 credits per month, which maps to roughly 1,000 to 10,000 pages depending on whether you run Fast, Cost-effective, or Premium mode. The paid tier is around \$0.003 per page in default mode. GCP Document AI's Enterprise Document OCR processor is \$1.50 per 1,000 pages for the first 5M pages per month; specialized processors (invoice, receipt, contract) run roughly \$10 to \$65 per 1,000 pages. Tesseract is free but you pay in time — it's slower than the cloud services and produces lower-quality output on hard documents.
+Quick numbers to keep in your head — verify these against the live pricing pages before relying on them, since both LlamaParse and GCP adjust their tiers without much notice. LlamaParse's free tier is currently around 10,000 credits per month, which maps to roughly 1,000 to 10,000 pages depending on whether you run Fast, Cost-effective, or Agentic mode. The paid tier is around \$0.003 per page in default mode. GCP Document AI's Enterprise Document OCR processor is \$1.50 per 1,000 pages for the first 5M pages per month; specialized processors (invoice, receipt, W-2) run roughly \$10 to \$30 per 1,000 pages. Tesseract is free but you pay in time — it's slower than the cloud services and produces lower-quality output on hard documents.
 
 For a real audit engagement processing 50,000 pages of substantive-testing samples: LlamaParse paid tier is around \$150, GCP general OCR is around \$75, Tesseract is free but produces worse output and may need human cleanup. The cheaper option isn't always cheaper once you count the cleanup time.
 

@@ -2,7 +2,7 @@
 
 ## 1. Set up your AI coding assistant
 
-The recommended (and free) choice is **GitHub Copilot**. You registered with `@illinois.edu` in Module 2 — [GitHub Education](https://education.github.com) gives you Copilot Pro for free. Install the **GitHub Copilot** extension in VS Code (Extensions → search "GitHub Copilot" → install Microsoft's official one) and sign in.
+The recommended choice is **GitHub Copilot**. You registered with `@illinois.edu` in Module 2 — [GitHub Education](https://education.github.com) may include free access to GitHub Copilot for verified students (the tier and availability change over time; if it's not available to you, Copilot's free tier or any other assistant works fine here). Install the **GitHub Copilot** extension in VS Code (Extensions → search "GitHub Copilot" → install Microsoft's official one) and sign in.
 
 If you'd rather use a different AI assistant you already pay for (Cursor, Claude Code, ChatGPT Plus, etc.), that's fine — the rest of this walkthrough's ideas apply to any agent. The examples will use Copilot.
 

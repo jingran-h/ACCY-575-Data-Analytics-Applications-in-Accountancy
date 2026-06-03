@@ -23,7 +23,7 @@ This is the only logistical module in Part 2. The six modules that follow (M9–
 *The lecture covers what you need. These are here if you want to dig further.*
 
 - [Student Guide: Enrolling in a Class Account](https://wrds-www.wharton.upenn.edu/pages/about/wrds-account-types/student-guide-enrolling-in-a-class-account/) — WRDS. Canonical source for §2's enrollment flow.
-- [Python on the WRDS Cloud](https://wrds-www.wharton.upenn.edu/pages/grid-items/python-wrds-cloud/) — WRDS. Reference for the `wrds` client and `.pgpass` setup.
+- [Using Python on the WRDS Platform](https://wrds-www.wharton.upenn.edu/pages/grid-items/using-python-wrds-platform/) — WRDS. Reference for the `wrds` client and `.pgpass` setup.
 - [Remote Development using SSH](https://code.visualstudio.com/docs/remote/ssh) — Microsoft. Official docs for the VS Code Remote-SSH extension used in §4.
 - [`sec-parser`](https://pypi.org/project/sec-parser/) — Alphanome.AI. The 10-K-aware parser used for Item 7 extraction in §8b.
 

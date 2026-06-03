@@ -48,6 +48,14 @@ The catch is that "often" isn't "always." A zero-shot classifier that agrees wit
 
 The demo picks a five-class classification rubric over MD&A paragraphs (regulatory, operational, financial, macroeconomic, other), has you hand-label a 100-paragraph evaluation set, builds a classifier using structured output and in-context examples, and iterates the prompt until $\kappa \ge 0.7$. Only if the gate is passed do you label the full corpus and feed the resulting category as a one-hot feature back into the Module 10 GBM. The question on the far end is the one we keep asking across Part 2: does this new signal buy you predictive power over what we already had?
 
+This is the first time you need a *real* API key — Module 4 used a fake one to teach the mechanics. Get yours from the Anthropic console: create an account at [console.anthropic.com](https://console.anthropic.com), add a few dollars of credit under **Billing** (this module costs cents, not dollars), and generate a key under **API Keys** (it starts with `sk-ant-`). Then drop it into your project's `.env` and confirm `.env` is gitignored — the exact pattern from [Module 4 §3](../module-04-project-structure-and-secrets/walkthrough.md#3-set-up-env-for-secrets):
+
+```
+ANTHROPIC_API_KEY=sk-ant-...
+```
+
+Load it the same way you did there — `load_dotenv()` then read `os.environ["ANTHROPIC_API_KEY"]`; the `anthropic` client also picks that variable up automatically. Never paste the key into your code or a notebook cell.
+
 The brief:
 
 > **Brief.** Add `src/llm/paragraphs.py` with one helper:

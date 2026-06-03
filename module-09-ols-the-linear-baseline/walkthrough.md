@@ -39,7 +39,7 @@ git checkout -b feature/m9-ols
 
 ## 3. Brief the agent
 
-Before you hand anything to the agent, be clear on the regression you're specifying. Target: next-year return on assets — `ni / at` led one year. Features: three current-year operating ratios (asset turnover, R&D intensity, operating cash flow margin), plus industry dummies built from `sich`. Three real variables, a fixed-effects block, a one-year-ahead outcome.
+Before you hand anything to the agent, be clear on the regression you're specifying. Target: next-year return on assets — `ni / at` led one year. Features: three current-year operating ratios (asset turnover, R&D intensity, operating cash flow to assets), plus industry dummies built from `sich`. Three real variables, a fixed-effects block, a one-year-ahead outcome.
 
 This isn't an arbitrary spec. Predicting next-year ROA from current fundamentals is one of the most-replicated regressions in accounting. A version of it shows up everywhere real work happens. Equity analysts forecast next-year profitability before they forecast price; their starting point looks a lot like this regression. Auditors running analytical procedures under AU-C 520, or building a going-concern assessment under AU-C 570, need a defensible expectation of next year's profitability, and "industry-adjusted operating ratios predict next-year ROA" is exactly that kind of expectation. In academic accounting research, this family of regressions is the workhorse for asking how an accounting choice — a revenue recognition policy, capitalize-vs.-expense, an estimate — maps into future fundamentals. The modern DuPont decomposition (Nissim and Penman 2001) you saw in financial statement analysis is the conceptual ancestor of the feature set.
 
@@ -61,7 +61,7 @@ The brief:
 >
 > 1. Loads `data/raw/fundamentals.parquet` and validates with the Module 8 schema.
 > 2. Constructs target = 1-year-ahead `ni / at` (return on assets, lead 1).
-> 3. Constructs features = current-year `revt / at` (asset turnover), `xrd / at` (R&D intensity), `oancf / at` (operating cash flow margin), plus industry dummies from `sich`.
+> 3. Constructs features = current-year `revt / at` (asset turnover), `xrd / at` (R&D intensity), `oancf / at` (operating cash flow to assets), plus industry dummies from `sich`.
 > 4. Calls `fit_ols`, prints the summary, and saves four diagnostic plots to `results/m9/`: residuals vs fitted, Q-Q plot, scale-location, leverage.
 >
 > Add `tests/test_ols.py` with one passing test that calls `fit_ols` on a tiny synthetic frame and checks the coefficients are within a small tolerance of the known answer.
@@ -90,7 +90,7 @@ What to look at in the OLS output:
 
 *Optional further reading: [statsmodels OLS reference](https://www.statsmodels.org/stable/regression.html) — the library the agent uses to fit the model; its diagnostic-plots section maps directly onto the four plots in the table above.*
 
-Pick the coefficient you actually care about and write the result in plain English: *"A 1-percentage-point increase in R&D intensity is associated with a [X]-percentage-point change in next-year ROA, holding turnover and operating margin fixed."* If you can't write that sentence without looking at the code, you don't yet understand your own regression.
+Pick the coefficient you actually care about and write the result in plain English: *"A 1-percentage-point increase in R&D intensity is associated with a [X]-percentage-point change in next-year ROA, holding turnover and operating cash flow to assets fixed."* If you can't write that sentence without looking at the code, you don't yet understand your own regression.
 
 ## 5. Stress-test before you trust
 

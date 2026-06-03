@@ -4,7 +4,7 @@
 
 ## Motivation
 
-For a lot of accounting text tasks — classify a risk factor, extract a forecast number, detect litigation language, summarize an audit committee disclosure — you used to need a labeled training set and a custom model. With current pretrained LLMs (Claude, GPT, Gemini) you don't: a well-written prompt with zero training examples gets within a few points of a fine-tuned model on most of these tasks, in the time it takes to make an API call.
+For a lot of accounting text tasks — classify a risk factor, extract a forecast number, detect litigation language, summarize an audit committee disclosure — you used to need a labeled training set and a custom model. With current pretrained LLMs (Claude, GPT, Gemini) you often don't: a well-written prompt with zero training examples gets you a usable result in the time it takes to make an API call, with no labeled training set of your own. On easier, coarse tasks it comes close to a fine-tuned model; on harder fine-grained classification it can still trail a fine-tune by a wide margin — which is why you validate the prompt against trusted labels before relying on it at scale.
 
 The catch is that the quality of what you get is gated entirely by your prompt and your evaluation. The skills this module trains — write a clear extraction spec, force structured output, hand-label a small evaluation set, measure agreement — are the only things separating "the LLM said so" from a defensible analytical result.
 

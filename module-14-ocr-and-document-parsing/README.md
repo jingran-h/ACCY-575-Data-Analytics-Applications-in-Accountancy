@@ -22,7 +22,7 @@ OCR (optical character recognition) is what turns those images back into text. M
 - [LlamaParse documentation](https://www.llamaindex.ai/llamaparse) — LlamaIndex. The "supported file types" and "parsing instructions" pages are most relevant.
 - [Google Cloud Document AI](https://cloud.google.com/document-ai) — Google. Enterprise OCR with specialized processors for invoices, receipts, contracts, and form-type documents.
 - [Tesseract OCR](https://tesseract-ocr.github.io/tessdoc/) — open-source baseline. Useful as a free local fallback and as the floor your paid services should clearly beat.
-- [SEC EDGAR full-text search](https://efts.sec.gov/LATEST/search-index?q=&dateRange=custom&startdt=1990-01-01&enddt=1994-01-01) — context for which filings predate machine-readable text.
+- [SEC EDGAR full-text search](https://www.sec.gov/edgar/search/) — search the full text of EDGAR filings; note it only covers filings submitted electronically since 2001. Handy for pulling test documents like the modern 10-K.
 
 ## Materials
 
