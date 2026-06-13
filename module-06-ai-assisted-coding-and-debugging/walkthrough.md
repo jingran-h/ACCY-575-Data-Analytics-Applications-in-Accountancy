@@ -37,7 +37,7 @@ What the bitter lesson does *not* tell you is **where on that trajectory we are 
 
 The bitter lesson is a long-run prediction, not a free pass on prompt quality today.
 
-*Optional further reading: [a few more notes on the bitter lesson from a philosophical perspective](https://united-world-college.github.io/UWC-Survival-Guide/guides/default/computer-science/#the-bitter-lesson).*
+*Optional further viewing: [a talk on the bitter lesson](https://youtu.be/2hcsmtkSzIw?si=gSNHA2zVGiuVhzzV).*
 
 **Run both prompts yourself this module — but run them properly.** If you ask both in the same chat session, the brief's context leaks into the bad prompt's response via in-context learning. You're no longer testing the bad prompt; you're testing "bad prompt with everything I just typed sitting in context."
 
