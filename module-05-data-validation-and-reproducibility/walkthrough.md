@@ -80,7 +80,7 @@ In `tests/test_analysis.py`:
 
 ```python
 import pandas as pd
-from src.analysis import summary_stats   # the function you wrote in Module 3
+from src.analysis import summary_stats   # written in Module 3; moved to src/analysis.py in Module 4
 
 def test_summary_stats_returns_a_row_per_column():
     df = pd.DataFrame({"a": [1, 2, 3], "b": [4, 5, 6]})
@@ -100,7 +100,24 @@ Green dots = passing. If not, fix the function or the test.
 
 ## 6. Snapshot test for analysis results
 
-For larger analyses, snapshot the answer so a regression breaks the test loudly:
+For larger analyses, snapshot the answer so a regression breaks the test loudly. This example assumes a `compute_monthly_totals(df)` function — if you don't have one yet, add a minimal version to `src/analysis.py` first:
+
+```python
+# src/analysis.py
+def compute_monthly_totals(df):
+    """Total `amount` per calendar month."""
+    return (
+        df.assign(month=df["date"].dt.to_period("M").astype(str))
+          .groupby("month", as_index=False)["amount"].sum()
+    )
+```
+
+Then create the fixtures directory and the test:
+
+```bash
+mkdir -p tests/fixtures
+# add a small sample_transactions.csv (columns: date, amount, vendor) under tests/fixtures/
+```
 
 ```python
 # tests/test_monthly_totals_snapshot.py
@@ -118,6 +135,8 @@ def test_monthly_totals_match_snapshot():
 ```
 
 Generate the expected file once by hand (after you've eyeballed the result and confirmed it's right), commit it, and any future change that breaks the answer will fail this test.
+
+> `assert_frame_equal` compares **dtypes**, not just values. Reading `expected` back from a CSV can change a column's dtype (an `Int64` or a `Period` column can come back as `int64`/`object`), so the test can fail on dtype even when the numbers match. If that happens, cast the columns to plain `str`/`float` before saving the snapshot, or pass `check_dtype=False`.
 
 ## You're done if…
 

@@ -78,6 +78,8 @@ The brief:
 > Add `tests/test_encode.py` with one test on three short strings that checks the output shape is `(3, 768)`.
 >
 > `uv add transformers torch sentence-transformers`. Do **not** modify earlier modules' code.
+>
+> *(On `transformers` 5.x, loading `bert-base-uncased` through `AutoModel` prints a one-time "unexpected keys" report for the dropped pretraining heads — that's expected, and the embeddings are unaffected.)*
 
 Three non-obvious moves in this brief. Caching, because encoding is the expensive step. Without a cache, every notebook re-run pays the full forty-minute cost again. Same target, same train/test split, same downstream model — the only thing changing is whether embedding columns are added. And mean-pool over non-padding tokens, because padding positions carry no signal and pooling over them just dilutes the embedding.
 
@@ -133,10 +135,14 @@ change = 1.0 - cosine_similarity(emb_t.reshape(1, -1), emb_t_minus_1.reshape(1, 
 **Sentiment / tone classification (zero-shot).** `yiyanghkust/finbert-tone` is already fine-tuned on analyst reports for positive, negative, and neutral. The `pipeline` API gives you one-line inference.
 
 ```python
-from transformers import pipeline
-tone = pipeline("text-classification", model="yiyanghkust/finbert-tone")
+from transformers import BertTokenizer, BertForSequenceClassification, pipeline
+# finbert-tone predates the `model_type` key the bare pipeline() helper now requires
+# on transformers 5.x, so load the tokenizer and model explicitly:
+tok = BertTokenizer.from_pretrained("yiyanghkust/finbert-tone")
+mdl = BertForSequenceClassification.from_pretrained("yiyanghkust/finbert-tone", num_labels=3)
+tone = pipeline("text-classification", model=mdl, tokenizer=tok)
 tone("Operating margins compressed materially in Q3.")
-# [{'label': 'Negative', 'score': 0.99}]
+# [{'label': 'Negative', 'score': 1.0}]
 ```
 
 Aggregate per filing (share of negative sentences, say) and add as a feature.

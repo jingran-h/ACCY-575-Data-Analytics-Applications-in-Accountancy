@@ -51,7 +51,7 @@ The brief:
 > **Brief.** Build a small RAG pipeline over `data/raw/mdna.parquet`. Three files:
 >
 > 1. `src/rag/chunk.py` — `chunk_documents(df, chunk_tokens=500, overlap=50) -> pd.DataFrame` returning `(gvkey, fyear, chunk_id, text)`. Use the `transformers` tokenizer for the same model used in encoding so token counts line up.
-> 2. `src/rag/index.py` — `build_index(chunks, model_name="bert-base-uncased", store_path="data/interim/chroma")` that embeds each chunk and stores it in a Chroma collection. `query_index(query, k=5)` returns $\text{top-}k$ chunks with similarity scores.
+> 2. `src/rag/index.py` — `build_index(chunks, model_name="bert-base-uncased", store_path="data/interim/chroma")` that embeds each chunk and stores it in a Chroma collection. **Create the collection with cosine space** (`metadata={"hnsw:space": "cosine"}`) — Chroma defaults to L2, which ranks differently from the cosine similarity §1 describes. `query_index(query, k=5)` returns $\text{top-}k$ chunks; note Chroma's `query()` returns **distances** (smaller = more similar), so convert to a similarity with `similarity = 1 - distance` before returning, and label the field accordingly.
 > 3. `src/rag/answer.py` — `answer_question(question, k=5, model="claude-sonnet-4-6") -> dict` that retrieves $\text{top-}k$, builds a prompt with each chunk numbered and tagged with its `(gvkey, fyear, chunk_id)`, calls Claude with instructions to cite chunks by number for every factual claim, and returns `{"answer": str, "cited_chunk_ids": list[int], "raw_response": str}`.
 >
 > Then `notebooks/m13-rag.ipynb`:
@@ -74,6 +74,7 @@ Resist the urge to run the full pipeline end-to-end immediately. Spend ten minut
 from src.rag.index import query_index
 results = query_index("supply chain disruption", k=10)
 for r in results:
+    # r["score"] is a cosine similarity (1 − distance): higher = more relevant
     print(r["score"], r["gvkey"], r["fyear"], r["text"][:200])
 ```
 

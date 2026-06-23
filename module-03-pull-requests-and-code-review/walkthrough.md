@@ -4,7 +4,7 @@
 
 Find a classmate to pair with for this module. Both of you:
 
-1. Make your `ACCY575-walkthrough` repository **public** on GitHub: *Settings → General → Danger Zone → Change visibility*.
+1. Make your `ACCY575-walkthrough` repository **public** on GitHub: *Settings → scroll to the **Danger Zone** → Change visibility*.
 2. Share the repository URL with each other.
 
 You'll review each other's pull requests in Step 4. Pair review is the closest practical preview of what code review at a real job looks like.
@@ -81,7 +81,7 @@ Now do the same for your pair partner's PR:
 
 Reviewing real human-written code (not your own) is the muscle that lets you evaluate AI-generated code in Part 2. Same skill, different author.
 
-*Optional further reading: "Lessons from millions of AI code reviews" (Graphite blog — search the title; the URL changes occasionally) — how the review feedback loop shifts once an AI is the author.*
+*Optional further reading: ["Experimenting with AI code review"](https://graphite.com/blog/ai-code-review-experiments) (Graphite blog) — how the review feedback loop shifts once an AI is the author.*
 
 ## 5. Merge the PR
 

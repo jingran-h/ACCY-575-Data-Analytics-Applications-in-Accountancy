@@ -6,12 +6,14 @@ Open the `pyproject.toml` in your `ACCY575-walkthrough` project:
 
 ```toml
 [project]
-name = "ACCY575-walkthrough"
+name = "accy575-walkthrough"
 version = "0.1.0"
 description = "Add your description here"
-requires-python = ">=3.12"
-dependencies = ["pandas>=2.2.0"]
+requires-python = ">=3.13"
+dependencies = ["pandas>=3.0.3"]
 ```
+
+Your exact version numbers will differ — `uv` pins whatever is current when you run it (e.g. a recent Python 3.13+ and pandas 3.x), and `name` is the lowercased project name from Module 1.
 
 Four things to know:
 
@@ -81,7 +83,10 @@ In your project root:
 
 ```bash
 touch .env
+echo ".env" >> .gitignore   # do this BEFORE adding a real key — uv's default .gitignore does NOT exclude .env
 ```
+
+(You'll expand `.gitignore` properly in the next section; this one line makes sure a key can't slip into a commit in the meantime.)
 
 Open `.env` in VS Code and add a fake key (a real one would never be hard-coded into a tutorial, of course):
 
@@ -151,7 +156,7 @@ A useful project README answers four questions in under one screen of text:
 3. **How do I run it?** The command that actually produces output.
 4. **Where do the results live?** A pointer to `results.md` or wherever the analysis writeup goes.
 
-Open `README.md` and replace the `uv init` stub with something like:
+Open `README.md` (uv init created it empty) and fill it in with something like:
 
 ````markdown
 # ACCY575-walkthrough
@@ -187,5 +192,5 @@ This is the same skill you'd use to document an audit data pipeline, an FP&A mod
 
 - [ ] Your project has `pyproject.toml`, `src/`, `data/`, `notebooks/` layout.
 - [ ] `.env` exists with at least one variable, loaded via `python-dotenv`.
-- [ ] `.gitignore` excludes `.env` and `data/`.
+- [ ] `.gitignore` excludes `.env` and raw/interim data (`data/raw/`, `data/interim/`, `*.csv`, `*.parquet`, `*.xlsx`).
 - [ ] Your `README.md` answers: what is this, how to set up, how to run, where results live.

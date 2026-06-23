@@ -111,7 +111,7 @@ cd ACCY575-walkthrough
 ls
 ```
 
-You should see `pyproject.toml`, `main.py`, `.python-version`, `README.md`. Open it in VS Code:
+You should see `pyproject.toml`, `main.py`, `.python-version`, and an (empty) `README.md`. Two things `uv init` does quietly that aren't in that list: it also runs `git init` (so the folder is already a Git repo — you'll use that in Module 2), and it **lowercases the project name** internally. So `pyproject.toml` will read `name = "accy575-walkthrough"` and the generated `main.py` prints the lowercased name, even though your folder — and, later, your GitHub repo — keep the casing you typed. Open it in VS Code:
 
 ```bash
 code .
@@ -129,7 +129,7 @@ Open VS Code's integrated terminal (`` Ctrl+` `` — that's Control + backtick, 
 uv run main.py
 ```
 
-You should see `Hello from ACCY575-walkthrough!`.
+You should see `Hello from accy575-walkthrough!` (lowercased — `uv` normalizes the package name, as noted in Step 5).
 
 While that ran, `uv` quietly created a `.venv/` directory in your project — that's where the project's Python interpreter and its packages live (the "virtual environment").
 

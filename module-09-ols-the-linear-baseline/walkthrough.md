@@ -55,14 +55,14 @@ The brief:
 > def fit_ols(df: pd.DataFrame, target: str, features: list[str]) -> "statsmodels.regression.linear_model.RegressionResultsWrapper":
 > ```
 >
-> The function should fit OLS using `statsmodels.api.OLS` with HC3 (heteroskedasticity-consistent) standard errors and return the fitted results object. Drop rows with any NaN in `target` or `features` *inside* the function and log how many were dropped.
+> The function should fit OLS using `statsmodels.api.OLS` with HC3 (heteroskedasticity-consistent) standard errors and return the fitted results object. Add an intercept with `sm.add_constant(X)` — `statsmodels.api.OLS` does **not** add one automatically (unlike the formula API), so without it the regression is forced through the origin. Drop rows with any NaN in `target` or `features` *inside* the function and log how many were dropped.
 >
 > Then add `notebooks/m9-ols.ipynb` (or a script under `notebooks/`) that:
 >
 > 1. Loads `data/raw/fundamentals.parquet` and validates with the Module 8 schema.
 > 2. Constructs target = 1-year-ahead `ni / at` (return on assets, lead 1).
-> 3. Constructs features = current-year `revt / at` (asset turnover), `xrd / at` (R&D intensity), `oancf / at` (operating cash flow to assets), plus industry dummies from `sich`.
-> 4. Calls `fit_ols`, prints the summary, and saves four diagnostic plots to `results/m9/`: residuals vs fitted, Q-Q plot, scale-location, leverage.
+> 3. Constructs features = current-year `revt / at` (asset turnover), `xrd / at` (R&D intensity), `oancf / at` (operating cash flow to assets), plus industry dummies from `sich` built with `pd.get_dummies(..., drop_first=True)` and cast to `float` — dropping one category keeps the dummy block from being collinear with the intercept (the dummy trap), which `statsmodels` won't warn you about.
+> 4. Calls `fit_ols`, prints the summary, and saves four diagnostic plots to `results/m9/`: residuals vs fitted, Q-Q plot, scale-location, leverage. (statsmodels has no one-call helper for all four — residuals-vs-fitted and `sm.qqplot` are direct, but scale-location and leverage are hand-rolled from `results.get_influence()`.)
 >
 > Add `tests/test_ols.py` with one passing test that calls `fit_ols` on a tiny synthetic frame and checks the coefficients are within a small tolerance of the known answer.
 >
@@ -88,7 +88,7 @@ What to look at in the OLS output:
 | **Q-Q plot** | Should hug the diagonal. | Heavy tails ⇒ outliers; consider winsorizing. |
 | **Leverage plot** | A few high-leverage points are normal. | If one or two points dominate, the result is *those points*, not the population. |
 
-*Optional further reading: [statsmodels OLS reference](https://www.statsmodels.org/stable/regression.html) — the library the agent uses to fit the model; its diagnostic-plots section maps directly onto the four plots in the table above.*
+*Optional further reading: [statsmodels OLS reference](https://www.statsmodels.org/stable/regression.html) — the library the agent uses to fit the model; the four diagnostic plots above are built from its `OLSResults` / `get_influence()` objects rather than a single plotting call.*
 
 Pick the coefficient you actually care about and write the result in plain English: *"A 1-percentage-point increase in R&D intensity is associated with a [X]-percentage-point change in next-year ROA, holding turnover and operating cash flow to assets fixed."* If you can't write that sentence without looking at the code, you don't yet understand your own regression.
 

@@ -142,13 +142,13 @@ Type `1` and press Enter. Approve the push on your phone. (If your IP doesn't ch
 You should land at a prompt that looks roughly like:
 
 ```
-[your-username@wrds-cloud-login1-h ~]$
+[your-username@wrds-cloud1 ~]$
 ```
 
 You're now on a Wharton server. Look around briefly and leave:
 
 ```bash
-pwd                  # /home/uiuc/<your-username>
+pwd                  # /home/<group>/<your-username>  — WRDS assigns the group segment for your class
 ls /wrds             # data libraries available — compustat, crsp, ibes, audit, ...
 exit
 ```
@@ -183,7 +183,7 @@ VS Code asks which config file to write to — pick the default (`~/.ssh/config`
 
 Command Palette → **Remote-SSH: Connect to Host…** → pick `wrds-cloud.wharton.upenn.edu` from the list. A new VS Code window opens. The first connection installs VS Code Server on the remote (~30 seconds) and asks for your WRDS password, then surfaces the same Duo text-menu prompt you saw in §3b — pick `1`, approve the push.
 
-When the bottom-left corner shows a green badge reading **SSH: wrds-cloud.wharton.upenn.edu**, you're in. **File → Open Folder** → pick `/home/uiuc/<your-username>` (or any subdirectory). The file explorer now shows the remote filesystem. **Terminal → New Terminal** opens a shell on WRDS Cloud — every command runs there.
+When the bottom-left corner shows a green badge reading **SSH: wrds-cloud.wharton.upenn.edu**, you're in. **File → Open Folder** → pick `/home/<group>/<your-username>` (or any subdirectory). The file explorer now shows the remote filesystem. **Terminal → New Terminal** opens a shell on WRDS Cloud — every command runs there.
 
 Extensions you install in this remote window go onto WRDS Cloud's VS Code Server, not your local VS Code. Install the Python and Jupyter extensions on the remote when prompted — those are the ones you'll use here.
 
@@ -296,7 +296,7 @@ In your local `ACCY575-wrds-data-analysis` repo, brief the agent:
 >
 > Compustat filters: `indfmt='INDL'`, `datafmt='STD'`, `popsrc='D'`, `consol='C'`, `fyear` between 2010 and 2024 inclusive.
 >
-> S&P 500 membership comes from **CRSP, not Compustat** — S&P Dow Jones revoked Compustat's license to redistribute index constituents in mid-2020, so `comp.idxcst_his` is incomplete after that. Use `crsp_a_indexes.dsp500list_v2` (or `dsp500list`), join to Compustat through `crsp.ccmxpf_lnkhist` on `permno → gvkey` with the standard `linktype in ('LU','LC')` and `linkprim in ('P','C')` filters. Apply the membership window with `start <= datadate <= ending`.
+> S&P 500 membership comes from **CRSP, not Compustat** — S&P Dow Jones revoked Compustat's license to redistribute index constituents in mid-2020, so `comp.idxcst_his` is incomplete after that. Use `crsp_a_indexes.dsp500list_v2` (or the legacy `dsp500list`), join to Compustat through `crsp.ccmxpf_lnkhist` on `permno → gvkey` with the standard `linktype in ('LU','LC')` and `linkprim in ('P','C')` filters. Apply the membership window with the columns that match the table you chose: `mbrstartdt <= datadate <= mbrenddt` for `dsp500list_v2`, or `start <= datadate <= ending` for the legacy `dsp500list`.
 >
 > Print the row count at the end. Don't commit the parquet file.
 
@@ -366,6 +366,8 @@ Read the file the agent produces. Then run it — this is the long step, plan fo
 ```bash
 uv add sec-parser
 ```
+
+> `sec-parser`'s last PyPI release is `0.58.1` (June 2024) — it works but isn't actively releasing, so pin the version and keep the regex fallback from the brief ready in case a filing trips it up.
 
 *Optional further reading: [`sec-parser`](https://pypi.org/project/sec-parser/) — Alphanome.AI's 10-K-aware parser, the package doing the Item 7 extraction in Stage 2.*
 

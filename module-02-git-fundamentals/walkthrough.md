@@ -5,7 +5,7 @@
 Open a tab and do this **now**.
 
 1. **Required:** Have a GitHub account. If you already have one, use it — no need to create a new one. Otherwise, sign up at [github.com](https://github.com); any email is fine.
-2. **Optional:** Apply for [GitHub Education](https://education.github.com/) — verified students can get **free access to GitHub Copilot** as an AI coding assistant for the course. (The exact Copilot tier and eligibility change over time, so check the current GitHub Education terms; either way it's optional — the course works with any AI assistant, or none.) You'll need an `@illinois.edu` email on your account for student verification — add it under *Settings → Emails* if it's not there yet. Approval can take up to 48 hours, so start early if you want it.
+2. **Optional:** Apply for [GitHub Education](https://education.github.com/) — verified students can get **free access to GitHub Copilot** (currently delivered as a dedicated *GitHub Copilot Student* plan) as an AI coding assistant for the course. (The exact Copilot tier and eligibility change over time, so check the current GitHub Education terms; either way it's optional — the course works with any AI assistant, or none.) You'll need an `@illinois.edu` email on your account for student verification — add it under *Settings → Emails* if it's not there yet. Approval can take up to 48 hours, so start early if you want it.
 
    *Skip step 2 if you already have a paid LLM subscription* you plan to use as your coding agent (Claude Pro, ChatGPT Plus, Cursor Pro, Claude Code, etc.). The course doesn't care which agent you use; we'll cover setup options in Module 6.
 
@@ -46,12 +46,11 @@ git config --global --list
 
 ```bash
 cd ~/Projects/accy575/ACCY575-walkthrough
-git status              # error: not a git repo
-git init
-git status              # now: lots of untracked files
+git status              # already a repo — uv init ran `git init` in Module 1, so you'll see untracked files on branch main
+git log                 # fails: "does not have any commits yet" — you'll make the first one below
 ```
 
-The default `.gitignore` from `uv init` already excludes `__pycache__/` and `.venv/`. (In Module 4, when we introduce `.env` for secrets, you'll see why this list matters — once a real API key lands in Git history, it's compromised forever, even if you delete it later.)
+Because `uv init` already initialized the repo in Module 1, there's no `git init` to run here. (If you ever start a project *without* `uv`, `git init` is how you'd create the repo from scratch.) The default `.gitignore` from `uv init` already excludes `__pycache__/` and `.venv/`. (In Module 4, when we introduce `.env` for secrets, you'll see why this list matters — once a real API key lands in Git history, it's compromised forever, even if you delete it later.)
 
 ## 3. First commit
 

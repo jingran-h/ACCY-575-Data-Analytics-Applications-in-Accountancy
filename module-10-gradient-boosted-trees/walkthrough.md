@@ -55,7 +55,7 @@ The brief:
 >     train: pd.DataFrame, test: pd.DataFrame,
 >     target: str, features: list[str],
 >     params: dict | None = None,
-> ) -> tuple["xgboost.Booster", pd.Series]:
+> ) -> tuple["xgboost.XGBRegressor", pd.Series]:
 > ```
 >
 > Returns the fitted booster and predictions on `test`. Default params: `n_estimators=500`, `learning_rate=0.05`, `max_depth=5`, `early_stopping_rounds=20`, `eval_metric="rmse"`. Use `xgboost.XGBRegressor` (sklearn API). Pass all params (including `early_stopping_rounds` and `eval_metric`) to the **constructor** — XGBoost ≥ 2.1 removed them from `.fit()`. Provide an `eval_set=[(X_val, y_val)]` to `.fit()` so early stopping has something to monitor.
@@ -70,11 +70,13 @@ The brief:
 >
 > Add `tests/test_gbm.py` with one passing test on synthetic data.
 >
-> `uv add xgboost shap`. Do **not** modify `src/pull_data.py` or `src/models/ols.py`.
+> `uv add xgboost "shap" "numba>=0.60"` (pinning `numba>=0.60` avoids a resolver dead-end on Python 3.13, where the default `shap` pulls an old `numba`/`llvmlite` that has no 3.13 wheel). Do **not** modify `src/pull_data.py` or `src/models/ols.py`.
 
 The brief is doing four things a sloppy prompt would skip. It pins the target and features to Module 9 so the comparison number actually means something. It names the time split explicitly, which kills the temptation for the agent to reach for `train_test_split(shuffle=True)`. It demands the OLS baseline on the same split, because the question of the module is whether gradient boosting buys you anything. And it requires `early_stopping_rounds`, without which the agent will cargo-cult `n_estimators=500` and happily overfit.
 
 ## 5. Run, read, and compare to OLS
+
+> **macOS only:** XGBoost's wheel needs the OpenMP runtime, which `pip`/`uv` don't install. If `import xgboost` fails with a `libomp.dylib` error, run `brew install libomp` once.
 
 ```bash
 uv run jupyter lab notebooks/m10-gbm.ipynb
