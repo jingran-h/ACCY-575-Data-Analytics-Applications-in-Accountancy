@@ -134,7 +134,7 @@ def test_monthly_totals_match_snapshot():
     )
 ```
 
-Generate the expected file once by hand (after you've eyeballed the result and confirmed it's right), commit it, and any future change that breaks the answer will fail this test.
+Generate the expected file once by hand (after you've eyeballed the result and confirmed it's right), commit it, and any future change that breaks the answer will fail this test. (These fixtures live under `tests/fixtures/`, not `data/`, so the Module 4 `.gitignore` data rules don't touch them — `git add` commits them normally.)
 
 > `assert_frame_equal` compares **dtypes**, not just values. Reading `expected` back from a CSV can change a column's dtype (an `Int64` or a `Period` column can come back as `int64`/`object`), so the test can fail on dtype even when the numbers match. If that happens, cast the columns to plain `str`/`float` before saving the snapshot, or pass `check_dtype=False`.
 

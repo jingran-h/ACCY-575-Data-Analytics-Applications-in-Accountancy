@@ -92,7 +92,7 @@ The brief:
 >
 > Add `tests/test_classify.py` with one test on three obviously-classifiable strings (the API call mocked, or skip if no `ANTHROPIC_API_KEY` env var).
 >
-> `uv add anthropic scikit-learn`. The `ANTHROPIC_API_KEY` lives in `.env`, same way you handled secrets in Module 4.
+> `uv add anthropic scikit-learn` (`pandas` and a parquet engine like `pyarrow` carry over from Module 8 — add them here too if you're running this module in isolation). The `ANTHROPIC_API_KEY` lives in `.env`, same way you handled secrets in Module 4.
 
 The non-obvious moves in this brief are worth understanding before you hand it over. Structured output via tool use forces the API to return valid JSON conforming to your schema; without it you're parsing the model's prose and missing 5% of edge cases where it decides to be helpful and explain its reasoning, breaking your parser. Caching by hash of `(model, prompt_template_version, text)` means bumping the prompt invalidates the cache automatically. Without versioning you'd rerun the eval and get the cached old-prompt results back without realizing. Holding out the in-context examples matters because if you don't, you're measuring how well the model copies its own demonstrations, which is a useless number. And the $\kappa \ge 0.7$ gate is non-negotiable. If the model isn't good enough, you don't get to use it. Pretending otherwise is academic dishonesty in research and a career-ender in audit.
 

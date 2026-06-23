@@ -84,7 +84,7 @@ cd /tmp
 git clone https://github.com/<your-username>/ACCY575-walkthrough.git
 cd ACCY575-walkthrough
 uv sync
-uv run python -m src.main
+uv run python -m src.analysis
 ```
 
 If it doesn't run, fix it. **Do this before you submit.** This is the single most common failure mode.
@@ -109,7 +109,7 @@ That should print nothing. If it prints anything, you have a problem — see you
 
 ## You're done if…
 
-- [ ] A classmate could clone your repo, run `uv sync && uv run python -m src.main`, and get the same answer you got.
+- [ ] A classmate could clone your repo, run `uv sync && uv run python -m src.analysis`, and get the same answer you got.
 - [ ] Your `results.md` answers the question without reference to the code.
 - [ ] Your commit history tells a coherent story.
 - [ ] All checks in [README.md's deliverable list](README.md) are met.

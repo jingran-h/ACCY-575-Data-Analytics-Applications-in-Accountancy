@@ -33,12 +33,12 @@ __pycache__/
 .env.*
 .pgpass
 
-# Data — WRDS is licensed, do not commit raw pulls
+# Data — WRDS is licensed, do not commit raw pulls (test fixtures under tests/ stay committable)
 data/raw/
 data/interim/
-*.csv
-*.parquet
-*.xlsx
+data/*.csv
+data/*.parquet
+data/*.xlsx
 
 # OS
 .DS_Store

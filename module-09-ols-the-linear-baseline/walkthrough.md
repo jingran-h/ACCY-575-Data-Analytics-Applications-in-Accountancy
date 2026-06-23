@@ -61,12 +61,12 @@ The brief:
 >
 > 1. Loads `data/raw/fundamentals.parquet` and validates with the Module 8 schema.
 > 2. Constructs target = 1-year-ahead `ni / at` (return on assets, lead 1).
-> 3. Constructs features = current-year `revt / at` (asset turnover), `xrd / at` (R&D intensity), `oancf / at` (operating cash flow to assets), plus industry dummies from `sich` built with `pd.get_dummies(..., drop_first=True)` and cast to `float` — dropping one category keeps the dummy block from being collinear with the intercept (the dummy trap), which `statsmodels` won't warn you about.
+> 3. Constructs features = current-year `revt / at` (asset turnover), `xrd / at` (R&D intensity), `oancf / at` (operating cash flow to assets), plus industry dummies from `sich` built with `pd.get_dummies(..., drop_first=True)` and cast to `float` — dropping one category keeps the dummy block from being collinear with the intercept (the dummy trap), which `statsmodels` won't raise a runtime warning about — though `.summary()` would flag it with a multicollinearity footnote.
 > 4. Calls `fit_ols`, prints the summary, and saves four diagnostic plots to `results/m9/`: residuals vs fitted, Q-Q plot, scale-location, leverage. (statsmodels has no one-call helper for all four — residuals-vs-fitted and `sm.qqplot` are direct, but scale-location and leverage are hand-rolled from `results.get_influence()`.)
 >
 > Add `tests/test_ols.py` with one passing test that calls `fit_ols` on a tiny synthetic frame and checks the coefficients are within a small tolerance of the known answer.
 >
-> Use `uv add statsmodels matplotlib`. Do **not** modify `src/pull_data.py` or anything from Module 8.
+> Use `uv add statsmodels matplotlib`. Do **not** modify anything from Module 8 (e.g. `src/pull_fundamentals.py`, `src/pull_mdna.py`).
 
 A short prompt would miss four things this one catches. HC3 standard errors, because default OLS errors assume homoskedasticity and accounting panels never are. The one-year lead on the target, for the reason above. Industry fixed effects, for the reason above. And the test. The agent will skip the test unless you insist. Insist.
 

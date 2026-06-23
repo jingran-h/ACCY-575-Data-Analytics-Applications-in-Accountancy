@@ -9,6 +9,7 @@ Open the `pyproject.toml` in your `ACCY575-walkthrough` project:
 name = "accy575-walkthrough"
 version = "0.1.0"
 description = "Add your description here"
+readme = "README.md"
 requires-python = ">=3.13"
 dependencies = ["pandas>=3.0.3"]
 ```
@@ -127,12 +128,12 @@ __pycache__/
 .env
 .env.*
 
-# Data
+# Data — keep raw/interim pulls and bulk data files out of Git, but not test fixtures
 data/raw/
 data/interim/
-*.csv
-*.parquet
-*.xlsx
+data/*.csv
+data/*.parquet
+data/*.xlsx
 
 # OS
 .DS_Store
@@ -192,5 +193,5 @@ This is the same skill you'd use to document an audit data pipeline, an FP&A mod
 
 - [ ] Your project has `pyproject.toml`, `src/`, `data/`, `notebooks/` layout.
 - [ ] `.env` exists with at least one variable, loaded via `python-dotenv`.
-- [ ] `.gitignore` excludes `.env` and raw/interim data (`data/raw/`, `data/interim/`, `*.csv`, `*.parquet`, `*.xlsx`).
+- [ ] `.gitignore` excludes `.env` and raw/interim data (`data/raw/`, `data/interim/`, `data/*.csv`, `data/*.parquet`, `data/*.xlsx`).
 - [ ] Your `README.md` answers: what is this, how to set up, how to run, where results live.
