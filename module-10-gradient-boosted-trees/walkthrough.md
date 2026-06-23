@@ -70,7 +70,7 @@ The brief:
 >
 > Add `tests/test_gbm.py` with one passing test on synthetic data.
 >
-> `uv add xgboost "shap" "numba>=0.60"` (pinning `numba>=0.60` keeps the resolver on a `numba`/`llvmlite` that ships a Python 3.13 wheel). Do **not** modify `src/pull_fundamentals.py`, `src/pull_mdna.py`, or `src/models/ols.py`.
+> `uv add xgboost "shap" "numba>=0.61"` (pinning `numba>=0.61` keeps the resolver on a `numba`/`llvmlite` that ships a Python 3.13 wheel — 0.61 is the first `numba` release with a `cp313` wheel). Do **not** modify `src/pull_fundamentals.py`, `src/pull_mdna.py`, or `src/models/ols.py`.
 
 The brief is doing four things a sloppy prompt would skip. It pins the target and features to Module 9 so the comparison number actually means something. It names the time split explicitly, which kills the temptation for the agent to reach for `train_test_split(shuffle=True)`. It demands the OLS baseline on the same split, because the question of the module is whether gradient boosting buys you anything. And it requires `early_stopping_rounds`, without which the agent will cargo-cult `n_estimators=500` and happily overfit.
 
