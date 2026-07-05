@@ -15,11 +15,11 @@ By the end of this engagement you will have:
 - Turned an open-ended disclosure-quality question into a concrete, evidence-backed review — deciding for yourself what "adequate" means and how to measure it.
 - Directed the agent to build the analysis over real 10-K text, and validated its outputs before trusting them.
 - Benchmarked a firm's narrative against peers and against its own numbers, and told the two apart.
-- Produced a disclosure-committee briefing and redline suggestions a general counsel's office could act on.
+- Produced a disclosure-committee briefing and flagged passages a general counsel's office could act on.
 
 ## What you deliver
 
-A disclosure-committee briefing and a set of redline suggestions flagged for counsel, backed by a reproducible repo. Full spec in the [engagement brief](brief.md); grading in [Assessment across Part 3](../README.md#assessment-across-part-3).
+A disclosure-committee briefing and a set of flagged passages with suggested improvements for counsel, backed by a reproducible repo. Full spec in the [engagement brief](brief.md); grading in [Assessment across Part 3](../README.md#assessment-across-part-3).
 
 ## Going Deeper *(optional)*
 

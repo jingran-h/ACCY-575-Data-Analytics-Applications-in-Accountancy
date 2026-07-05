@@ -22,7 +22,7 @@ Your **assigned industry (2-digit SIC) and focal firm** are on the assignment sh
 ## What to hand in
 
 - **A decision memo to the controller / CFO** — your read on how the firm's cost actually behaves, what that implies for operating margin if sales fall, and — plainly stated — which costs are unavoidable in a downturn and which are not. Include the limits of what your estimate can support.
-- **A one-page board exhibit** — the margin picture under a −5% / −10% / −15% sales scenario, in a single chart and table a finance committee can read in a minute.
+- **A one-page board exhibit** — the margin picture under a range of downside sales scenarios, in a single chart and table a finance committee can read in a minute.
 - **The repository behind it** — reproducible in the Part 1 way (`uv`, validation, tests, honest commit history), so your numbers can be re-run.
 
 Bring all of it to the review session and be ready to walk us through your result.

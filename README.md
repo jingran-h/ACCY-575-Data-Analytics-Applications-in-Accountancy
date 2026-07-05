@@ -24,7 +24,7 @@ The semester is split into three parts:
 - **Part 2 (Modules 8–16) — Agent-Driven Data Analysis.** You pull a real research dataset from WRDS and analyze it with a coding agent doing the implementation. Each module covers one method or tool (OLS, gradient boosting, BERT, LLM zero-shot, retrieval-augmented generation, OCR and document parsing, full agent loop) applied to the same dataset, capped by a forward-looking module on autonomous research agents. The lecture is the **concept** — when each method applies, what it assumes, what its output means, how to evaluate it. The agent writes the code; you direct, review, and correct it.
 - **Part 3 (Modules 17–20) — Accounting Cases.** Four real engagements — internal audit, managerial accounting, financial communications, and an advisory capstone — where you apply the Parts 1–2 toolkit the way you will at work. Each module hands you a mandate and a real dataset and leaves the method to you: no walkthrough, no prescribed pipeline, no agent prompts written for you. You scope the problem, direct the agent, and deliver a professional artifact. The first three are individual; the capstone is a team engagement defended live.
 
-Modules 1–16 pace at roughly two per calendar week, fitting into the first half of the term. Part 3's four engagements (Modules 17–20) run across the remainder, each an extended project rather than a single lecture.
+Modules 1–16 each introduce one method or tool; Part 3's four engagements (Modules 17–20) are extended projects rather than single-topic modules.
 
 ---
 

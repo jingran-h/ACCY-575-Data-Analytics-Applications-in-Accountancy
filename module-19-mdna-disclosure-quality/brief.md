@@ -20,7 +20,7 @@ The **Part 2 MD&A panel** you built in **[Module 8](../module-08-wrds-data-acqui
 ## What to hand in
 
 - **A disclosure-committee briefing** — what your benchmarking found about the MD&A's completeness and balance, with the evidence behind each claim (and honest limits on what that evidence can support).
-- **Redline suggestions for counsel** — specific passages or omissions worth revisiting, each framed as a *suggestion with a reason* ("consider disclosing X — peers do, and the liquidity trend implies it"), not rewritten legal text.
+- **Flagged passages for counsel** — specific passages or omissions worth revisiting, each with a *reason* ("consider disclosing X — peers do, and the liquidity trend implies it"), for counsel to act on — not rewritten legal text.
 - **The repository behind it** — reproducible in the Part 1 way (`uv`, validation, tests, honest commit history).
 
 Bring all of it to the review session and be ready to walk us through your result.

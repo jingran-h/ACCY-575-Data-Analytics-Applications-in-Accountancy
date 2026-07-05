@@ -19,15 +19,16 @@ By the end of this engagement you will have:
 
 ## What you deliver
 
-An internal-audit findings memo / workpaper to the CAE and the reproducible repo behind it. Full spec in the [engagement brief](brief.md); assessment in [Assessment across Part 3](../README.md#assessment-across-part-3).
+An internal-audit findings memo / workpaper to the CAE and the reproducible repo behind it. Full spec in the [engagement brief](brief.md); grading in [Assessment across Part 3](../README.md#assessment-across-part-3).
 
 ## Going Deeper *(optional)*
 
-*The launch briefing frames the engagement and the professional standards it is judged against. Nothing below is required — these are references you may consult the way you would on the job.*
+*The launch briefing frames the engagement. These are references you may consult as you would on the job, not required reading.*
 
 - **ACFE Occupational Fraud "fraud tree"** — Association of Certified Fraud Examiners. The standard taxonomy of fraud schemes; the *fraudulent disbursements* branch (billing, check tampering, expense schemes) is your map of what to look for.
+- **IIA Global Internal Audit Standards** — the Institute of Internal Auditors' framework; internal audit's own professional standards, the counterpart to the external auditor's AU-C 240.
 - **AU-C 240 (AICPA) / PCAOB AS 2401**, *Consideration of Fraud in a Financial Statement Audit* — the external auditor's fraud standard your internal work feeds. Context for the professional lineage, not a manual.
-- **Benford's Law** (Nigrini, *Benford's Law: Applications for Forensic Accounting*) — the distributional test everyone reaches for first and misapplies second. Its conditions matter more than its formula.
+- **Benford's Law** (Nigrini, *Benford's Law: Applications for Forensic Accounting, Auditing, and Fraud Detection*) — the distributional test everyone reaches for first and misapplies second. Its conditions matter more than its formula.
 
 ## Materials
 
