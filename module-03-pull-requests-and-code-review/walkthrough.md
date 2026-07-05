@@ -97,6 +97,14 @@ git branch -d feature/add-summary
 
 Your branch is gone locally. On GitHub, click "Delete branch" after the merge to clean up there too. `main` is now up to date.
 
+## 6. Let a robot run your checks (CI)
+
+Step 1 listed "automated checks" as one reason PRs exist. Here's the concrete version. Reviewers shouldn't have to clone your branch and run the tests by hand to know they pass — **continuous integration (CI)** does it for them. With **GitHub Actions**, you commit one small file, `.github/workflows/ci.yml`, that says: *on every push and pull request, install the project with `uv sync` and run `uv run pytest`.* GitHub spins up a fresh machine, runs your checks, and stamps a green check or a red X on the PR before anyone merges — automated enforcement of everything Module 5 will teach, and it catches the "works on my laptop" failures a human reviewer's eyes slide right past.
+
+You don't need to wire this up on the walkthrough repo today, but know it exists — it's standard on every professional repository, and it's the machinery behind the "checks passed" badges you'll see on real PRs.
+
+*Optional further reading: [GitHub Actions — Building and testing Python](https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python) — GitHub's own quickstart for a test-on-push workflow, with a minimal starter you can adapt to `uv`.*
+
 ## You're done if…
 
 - [ ] You opened, reviewed, and merged at least one PR on your own repo.

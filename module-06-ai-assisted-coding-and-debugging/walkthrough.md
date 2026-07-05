@@ -68,6 +68,22 @@ This is your first line of defense against AI hallucination. Frontier models rou
 
 *Optional further reading: [Debugging in VS Code](https://code.visualstudio.com/docs/editor/debugging) — Microsoft's reference for the debugger user interface and breakpoints.*
 
+### Leave a trail: `logging` beats `print()`
+
+The debugger is perfect when you can sit and watch code run. But an agent working through a task, or a long WRDS pull in Part 2, runs *unattended* — and scattered `print()` calls scroll past and tell you nothing afterward. Python's built-in `logging` module gives you a durable, timestamped record you can filter by severity:
+
+```python
+import logging
+logging.basicConfig(level=logging.INFO, filename="run.log")
+
+logging.info("pulled %d filings", n)
+logging.error("skipped %s — parse failed", cik)
+```
+
+Run at `DEBUG` while developing and `INFO` in production, and the noise disappears without your deleting a single line. And `breakpoint()` — one line you drop anywhere — pauses into Python's built-in `pdb` debugger right in the terminal, which is how you inspect a variable over SSH on the WRDS Cloud, where there's no VS Code GUI (Module 8).
+
+*Optional further reading: [Python logging HOWTO](https://docs.python.org/3/howto/logging.html) — the standard library's own guide; the "Basic Logging Tutorial" section is all most scripts need.*
+
 ## 4. Lock the behavior in with a test
 
 Once the debugger confirms what the code actually does, write a test that fails if anyone (you, a future AI, a teammate) breaks it later. For example, if you built `monthly_totals_by_category(df)` from the brief in Step 2, the missing-category edge case is worth a test:

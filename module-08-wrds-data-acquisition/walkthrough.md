@@ -393,6 +393,10 @@ If you get disconnected (close the laptop, lose Wi-Fi, anything), the script kee
 
 If the brief was followed correctly, you should be in the second or third row. Approve the Duo Push on first Postgres connection, watch the progress for the first few hundred filings to make sure the rate is sensible (**3–4 filings/sec with 6 workers** after the first couple of minutes — the very start is slower while workers warm up), then `Ctrl+b d` out of `tmux` and let it cook. Come back in 30–60 minutes.
 
+**Keeping an eye on a shared server.** The WRDS Cloud login node is one machine shared by the whole class, with memory and disk quotas — the most common way a big pull dies is silently exhausting one of them. A few commands tell you what's happening on the box: `df -h` shows free disk, `free -h` shows free memory, and `top` (or `htop`, if it's installed) gives a live per-process view so you can spot a job about to be killed. When you want to know *why* something is slow, prefix it with `time` — `time uv run python -m src.pull_mdna` reports **real** (wall-clock) time separately from **user + sys** (CPU) time. If wall-clock dwarfs CPU time, the job is waiting on the network or disk; if CPU time is the bottleneck, that's exactly what the `multiprocessing.Pool` above buys you.
+
+*Optional further reading: [`memory_profiler`](https://pypi.org/project/memory-profiler/) — line-by-line RAM profiling for when a Compustat or text pull blows past the server's memory limit.*
+
 Sanity checks once it finishes:
 
 - Row count should be close to (but slightly less than) §8a's row count. Some firms file 10-K-equivalents (10-KSB, 10-K405) instead, and a small fraction of extractions will fail.
