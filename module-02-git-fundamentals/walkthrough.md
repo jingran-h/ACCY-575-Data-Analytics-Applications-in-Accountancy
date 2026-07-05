@@ -42,6 +42,17 @@ git config --global --list
 
 *Optional further reading: [Pro Git, Chapters 1 & 2](https://git-scm.com/book/en/v2) (Chacon & Straub) — the canonical Git reference; "Getting Started" and "Git Basics" cover install, config, and the commit model in depth.*
 
+### If a Git command drops you into Vim
+
+Run `git commit` with no `-m`, and Git opens a text editor for the message — often **Vim**, which gives no hint how to get out, and this is a classic week-one panic. If you land there and just want to escape: press `Esc`, type `:q!`, and hit Enter to quit without saving (or `:wq` to save first). To actually write a message, press `i` to start typing, then `Esc` and `:wq`. To avoid Vim entirely, point Git at an editor you already know — do this once now:
+
+```bash
+git config --global core.editor "code --wait"   # use VS Code
+# or: git config --global core.editor nano       # a friendlier terminal editor
+```
+
+You'll meet a bare terminal editor again in Module 8 on the WRDS Cloud, where there's no VS Code window — so `nano` is worth knowing even if you pick `code` here.
+
 ## 2. Initialize a repo in your course project
 
 ```bash

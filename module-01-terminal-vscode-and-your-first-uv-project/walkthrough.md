@@ -16,6 +16,12 @@ cd ..        # go up one level
 
 Try each one. Get muscle memory.
 
+### A few shell habits worth learning early
+
+Beyond navigation, two characters do most of the heavy lifting in a terminal. A **pipe** `|` feeds one command's output straight into the next, so you compose small tools instead of writing a program: `ls | wc -l` counts the files in a folder, and the classic `... | sort | uniq -c | sort -rn` turns any list into a ranked frequency count. **`grep`** searches text — `grep -i revenue notes.txt` prints the matching lines, `grep -c` just counts them — so you can sanity-check a huge file without opening it. And **quote anything with spaces**: `cd "Q3 Financials"` works, `cd Q3 Financials` does not; inside double quotes a `$VARIABLE` still expands, inside single quotes it stays literal. Accounting filenames are full of spaces, so this one saves real debugging time.
+
+You'll also meet **`tmux`** — a "terminal multiplexer" that keeps a session and any long-running job alive even if your connection drops — in Module 8, where it keeps multi-hour WRDS data pulls running after you close your laptop. Nothing to install now.
+
 *Optional further reading: [The Missing Semester — "The Shell"](https://missing.csail.mit.edu/2020/course-shell/) (MIT) — a 30-minute primer that goes well beyond these four commands for anyone who'll live in a terminal.*
 
 ## 2. Install VS Code
