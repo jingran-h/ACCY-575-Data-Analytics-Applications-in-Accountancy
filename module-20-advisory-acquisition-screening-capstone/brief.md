@@ -14,7 +14,7 @@ Everything the mandate does not specify — which companies are even in scope, w
 
 ## The data
 
-- The **Part 2 Compustat panel** you built in **[Module 8](../module-08-wrds-data-acquisition/walkthrough.md)** (S&P 500 firm-years). Reuse it, and pull any additional fundamentals you need — working-capital and cash-flow lines such as `rect`, `invt`, `ap`, `act`, `lct`, `capex`, `dlc`, `dltt` — from WRDS the way Module 8 did. Same subscription, no new entitlement.
+- The **Part 2 Compustat panel** you built in **[Module 8](../module-08-wrds-data-acquisition/walkthrough.md)** (S&P 500 firm-years). Reuse it, and pull any additional fundamentals you need — working-capital and cash-flow lines such as `rect`, `invt`, `ap`, `act`, `lct`, `capx`, `dlc`, `dltt` — from WRDS the way Module 8 did. Same subscription, no new entitlement.
 - **EDGAR filing signals** (the [Module 14](../module-14-ocr-and-document-parsing/walkthrough.md) approach) — things a diligence team watches for, like late-filing notices (NT 10-K), non-reliance/restatement disclosures (8-K Item 4.02), auditor changes (8-K Item 4.01), and internal-control weaknesses.
 
 The client did not hand you a target list. Defining the universe is part of the job.

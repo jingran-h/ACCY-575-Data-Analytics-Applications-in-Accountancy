@@ -203,7 +203,16 @@ In the VS Code window that's connected to WRDS Cloud (the one with the green **S
 gh auth login
 ```
 
-If `gh` isn't installed yet (`command not found`), one line gets it: `conda install -c conda-forge gh -y`. Then re-run.
+If `gh` isn't installed yet (`command not found`), install it into your home directory — you don't have root on the WRDS Cloud, so system package managers are out. Grab the current `gh_*_linux_amd64.tar.gz` from [GitHub CLI's releases page](https://github.com/cli/cli/releases/latest) and unpack it (substitute the current version number for `X.Y.Z`):
+
+```bash
+wget https://github.com/cli/cli/releases/download/vX.Y.Z/gh_X.Y.Z_linux_amd64.tar.gz
+tar xzf gh_X.Y.Z_linux_amd64.tar.gz
+mkdir -p ~/bin && cp gh_X.Y.Z_linux_amd64/bin/gh ~/bin/
+export PATH="$HOME/bin:$PATH"     # add this line to your ~/.bashrc too
+```
+
+Then re-run `gh auth login`. (If you happen to have a user-space conda such as Miniconda in your home directory, `conda install -c conda-forge gh -y` also works.)
 
 Pick **GitHub.com → HTTPS → Login with a web browser**. Copy the one-time code, press Enter, the browser opens *on your laptop* and you authorize. This is the exact flow from [Module 2](../module-02-git-fundamentals/walkthrough.md) — same screens, same code-paste step.
 
@@ -256,8 +265,10 @@ Back in your `ACCY575-wrds-data-analysis` project:
 
 ```bash
 uv add wrds pandas pyarrow pandera
-uv add --dev pytest ipykernel
+uv add --dev pytest ipykernel jupyterlab
 ```
+
+(`ipykernel` is what VS Code needs to run notebook cells; `jupyterlab` adds the standalone `jupyter lab` command that Modules 9–11 use to open notebooks from the terminal. Without it, `uv run jupyter lab` fails with `Error executing Jupyter command 'lab'`.)
 
 Quick sanity check:
 
@@ -282,7 +293,7 @@ Open your coding agent (Copilot Chat, Claude Code, Cursor — whichever you're u
 The pull has **two parts that live in different places**:
 
 - **Compustat fundamentals.** Sit in WRDS Postgres. Reachable from your laptop over `.pgpass`. Pull this locally.
-- **MD&A text from 10-K filings.** WRDS Postgres only stores the *index* (`wrdssec_all.wrds_forms`) — the actual filing files live on the WRDS Cloud's local filesystem at `/wrds/sec/sasdata/…`, accessible only from a process *running on the WRDS Cloud*. **You'll do this part in your remote VS Code session from §4.**
+- **MD&A text from 10-K filings.** WRDS Postgres only stores the *index* (`wrdssec_all.wrds_forms`) — the actual filing files live on the WRDS Cloud's local filesystem under `/wrds/sec/warchives/…` (with parsed/cleaned copies under `/wrds/sec/wrds_clean_filings/…`), accessible only from a process *running on the WRDS Cloud*. **You'll do this part in your remote VS Code session from §4.**
 
 This is where §4 (Remote-SSH) and §5 (`gh auth login` on the cloud) stop being demo-only setup and become required. If you skipped them, go back.
 
@@ -296,14 +307,14 @@ In your local `ACCY575-wrds-data-analysis` repo, brief the agent:
 >
 > Compustat filters: `indfmt='INDL'`, `datafmt='STD'`, `popsrc='D'`, `consol='C'`, `fyear` between 2010 and 2024 inclusive.
 >
-> S&P 500 membership comes from **CRSP, not Compustat** — S&P Dow Jones revoked Compustat's license to redistribute index constituents in mid-2020, so `comp.idxcst_his` is incomplete after that. Use `crsp_a_indexes.dsp500list_v2` (or the legacy `dsp500list`), join to Compustat through `crsp.ccmxpf_lnkhist` on `permno → gvkey` with the standard `linktype in ('LU','LC')` and `linkprim in ('P','C')` filters. Apply the membership window with the columns that match the table you chose: `mbrstartdt <= datadate <= mbrenddt` for `dsp500list_v2`, or `start <= datadate <= ending` for the legacy `dsp500list`.
+> S&P 500 membership comes from **CRSP, not Compustat** — S&P Dow Jones revoked Compustat's license to redistribute index constituents in mid-2020, and the S&P index history was pulled from `comp.idxcst_his` (depending on your data vintage it is missing outright or frozen at mid-2020). Use `crsp_a_indexes.dsp500list_v2` (or the legacy `dsp500list`), join to Compustat through `crsp.ccmxpf_lnkhist` on `permno → gvkey` with the standard `linktype in ('LU','LC')` and `linkprim in ('P','C')` filters. Apply the membership window with the columns that match the table you chose: `mbrstartdt <= datadate <= mbrenddt` for `dsp500list_v2`, or `start <= datadate <= ending` for the legacy `dsp500list`.
 >
 > Print the row count at the end. Don't commit the parquet file.
 
 What this brief gets right that a sloppy prompt wouldn't:
 
 - The four standard Compustat filter flags (`INDL`/`STD`/`D`/`C`). Without them you get duplicates from the supplemental and restated formats.
-- **CRSP-not-Compustat for S&P 500 membership.** Most tutorials online still tell you to use `comp.idxcst_his`. They predate the 2020 licensing change and will silently give you a panel that ends in 2020. This is exactly the leakage-class mistake §8 is supposed to teach you to catch.
+- **CRSP-not-Compustat for S&P 500 membership.** Most tutorials online still tell you to use `comp.idxcst_his`. They predate the 2020 licensing change and will silently give you a broken panel — the S&P membership rows are gone or frozen at mid-2020, depending on the data vintage. This is exactly the leakage-class mistake §8 is supposed to teach you to catch.
 - The link-history join (`ccmxpf_lnkhist`) with `linktype`/`linkprim` filters. Naive joins on `permno` or `cusip` produce duplicate-firm and history-misalignment bugs.
 - "Don't commit the parquet" — the agent will sometimes try to `git add` the data file. Stop it.
 
@@ -342,7 +353,7 @@ Open the VS Code Remote-SSH window connected to WRDS Cloud (§4) and clone (or `
 
 > **Brief.** Write `src/pull_mdna.py`, intended to run **on the WRDS Cloud** (not locally). Two stages.
 >
-> **Stage 1 — find the right 10-K filings.** Connect via `wrds.Connection()`. Use the same S&P 500 / 2010–2024 panel as `src/pull_fundamentals.py` — re-derive `(gvkey, fyear)` from CRSP + `ccmxpf_lnkhist` so this script is independent. Map each `gvkey` to its historical `cik` via `wrdssec_all.wciklink_gvkey` (this is the WRDS-maintained linking table; pick the link active for each firm-year, not just the most recent). Then query `wrdssec_all.wrds_forms` for `form='10-K'` filings whose filing date falls in fiscal year `fyear` (or shortly after — 10-Ks typically file 60–90 days after fiscal year-end, so allow `fyear+1` Q1). Each row of the result has a `wrdsfname` column pointing to a file path under `/wrds/sec/sasdata/…`.
+> **Stage 1 — find the right 10-K filings.** Connect via `wrds.Connection()`. Use the same S&P 500 / 2010–2024 panel as `src/pull_fundamentals.py` — re-derive `(gvkey, fyear)` from CRSP + `ccmxpf_lnkhist` so this script is independent. Map each `gvkey` to its historical `cik` via `wrdssec_all.wciklink_gvkey` (this is the WRDS-maintained linking table; pick the link active for each firm-year, not just the most recent). Then query `wrdssec_all.wrds_forms` for `form='10-K'` filings whose filing date falls in fiscal year `fyear` (or shortly after — 10-Ks typically file 60–90 days after fiscal year-end, so allow `fyear+1` Q1). Each row of the result has a `wrdsfname` column naming the filing's file — resolve it against the archive root, i.e. `/wrds/sec/warchives/{wrdsfname}` for the raw filing (cleaned versions live under `/wrds/sec/wrds_clean_filings/`).
 >
 > **Stage 2 — read the file and extract Item 7 (MD&A).** For each row, open `wrdsfname` from the local filesystem, read the contents, and extract the "Item 7" section (Management's Discussion and Analysis). Use a 10-K-aware parser — `sec-parser` from PyPI is the cleanest path; regex on `r"item\s*7[.\s]"` … `r"item\s*7a[.\s]"` is the fallback. If extraction fails for a filing, log the `gvkey/fyear` and skip — don't fabricate text.
 >
@@ -367,11 +378,11 @@ Read the file the agent produces. Then run it — this is the long step, plan fo
 uv add sec-parser
 ```
 
-> `sec-parser`'s last PyPI release is `0.58.1` (June 2024) — it works but isn't actively releasing, so pin the version and keep the regex fallback from the brief ready in case a filing trips it up.
+> `sec-parser`'s last PyPI release is `0.58.1` (June 2024) and the project's GitHub README now states it is no longer maintained — it still works, so pin the version and keep the regex fallback from the brief ready in case a filing trips it up.
 
 *Optional further reading: [`sec-parser`](https://pypi.org/project/sec-parser/) — Alphanome.AI's 10-K-aware parser, the package doing the Item 7 extraction in Stage 2.*
 
-(`uv` is preinstalled on WRDS Cloud; if it isn't, `pip install --user uv` first.)
+(If `uv` isn't available on the WRDS Cloud, `pip install --user uv` first — then make sure `~/.local/bin` is on your `PATH`.)
 
 **Wrap the run in `tmux`.** A 30+ minute job over SSH dies the moment your laptop sleeps, your Wi-Fi switches, or you close the VS Code window. `tmux` is a terminal multiplexer that keeps your shell session alive on the server even when your client disconnects:
 
@@ -415,7 +426,7 @@ git push
 
 The Parquet file (`data/raw/mdna.parquet`) stays on the WRDS Cloud — it's gitignored. **What you push back is the script**, so a teammate or a grader on their own WRDS Cloud session can re-run it.
 
-**Copy the Parquet down to your laptop.** For the rest of Part 2 your laptop is the primary work environment, so once `mdna.parquet` is built on the WRDS Cloud you'll copy *that one file* down. (Re-running `src/pull_mdna.py` locally is *not* a fallback — the raw filings the script reads from `/wrds/sec/sasdata/` only exist on the WRDS Cloud's filesystem, and pulling them in bulk runs into hundreds of GB of transfer plus vendor licensing.) Expect the parsed Parquet to be **roughly 500 MB to 1 GB** depending on how aggressively the parser strips boilerplate. It's a one-time download.
+**Copy the Parquet down to your laptop.** For the rest of Part 2 your laptop is the primary work environment, so once `mdna.parquet` is built on the WRDS Cloud you'll copy *that one file* down. (Re-running `src/pull_mdna.py` locally is *not* a fallback — the raw filings the script reads from `/wrds/sec/warchives/` only exist on the WRDS Cloud's filesystem, and pulling them in bulk runs into hundreds of GB of transfer plus vendor licensing.) Expect the parsed Parquet to be **roughly 500 MB to 1 GB** depending on how aggressively the parser strips boilerplate. It's a one-time download.
 
 > **What is `scp`?** Short for *Secure Copy* — it's `cp` (the Unix file-copy command) but where one side is a remote server reached over SSH instead of another folder on your local machine. The syntax is `scp <source> <destination>`, and either path can be remote, written as `user@host:/absolute/or/~/relative/path`. Authentication, encryption, and the Duo step are all the same as in §3 — it's the same SSH connection, just used to move bytes instead of running commands. (For very large transfers, `rsync` over SSH is the heavier-duty version; for a one-shot file like this, `scp` is fine.)
 
@@ -446,6 +457,7 @@ class FundamentalsSchema(pa.DataFrameModel):
 
     class Config:
         strict = "filter"
+        coerce = True
         unique = ["gvkey", "fyear"]
 
 class MdnaSchema(pa.DataFrameModel):
@@ -458,8 +470,11 @@ class MdnaSchema(pa.DataFrameModel):
 
     class Config:
         strict = "filter"
+        coerce = True
         unique = ["gvkey", "fyear"]
 ```
+
+`coerce = True` matters here: WRDS's Postgres driver hands numeric columns back as `float64` (a nullable `fyear` comes across as `2010.0`), and a Parquet round-trip can shift dtypes again. Coercion casts each column to the declared type as part of validation — and still fails loudly on real problems, like an `fyear` that's missing or fractional.
 
 Wire each schema into the pull script that produces it (`pull_fundamentals.py` validates against `FundamentalsSchema` *before* writing; `pull_mdna.py` validates against `MdnaSchema` *before* writing). Re-run; if validation fails, you have a real problem to look at — don't paper over it by relaxing the schema.
 
