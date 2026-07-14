@@ -91,7 +91,7 @@ So you have three places you might actually run this, in order of speed:
 
 | Where | Fits | Notes |
 |---|---|---|
-| **WRDS grid (CPU)** | <2k short docs | `qsub` with enough RAM (`-l h_vmem=16G`); plan multiple hours |
+| **WRDS grid (CPU)** | <2k short docs | `qsub` batch job with a raised memory request (check the WRDS Cloud docs for the current flag); plan multiple hours |
 | **Local Mac (M-series, MPS)** | <5k docs | PyTorch's `mps` backend uses Apple GPU; substantially faster than pure CPU |
 | **Colab / Kaggle / campus HPC** | 5k+ docs | Free T4 (Colab) or A100 (campus); minutes, not hours |
 
@@ -112,7 +112,7 @@ The headline cell is the comparison:
 
 | Features | Test RMSE | Test R² |
 |---|---|---|
-| Fundamentals only (M10) | 0.071 | 0.27 |
+| Fundamentals only (M10) | 0.071 | 0.36 |
 | Fundamentals + MD&A embeddings | ? | ? |
 
 If text helps a little (a one-to-three-percent RMSE drop), that's the typical real-world result. Report it that way. If text helps a lot, check for leakage; MD&A sometimes references next year's outcome directly, and a model with access to that will look unreasonably good. If text doesn't help at all, that's a result too. The qualitative narrative may not carry marginal predictive signal beyond the fundamentals on this target.

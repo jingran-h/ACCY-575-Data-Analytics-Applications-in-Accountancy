@@ -57,8 +57,14 @@ You'll meet a bare terminal editor again in Module 8 on the WRDS Cloud, where th
 
 ```bash
 cd ~/Projects/accy575/ACCY575-walkthrough
-git status              # already a repo — uv init ran `git init` in Module 1, so you'll see untracked files on branch main
+git status              # already a repo — uv init ran `git init` in Module 1, so you'll see untracked files
 git log                 # fails: "does not have any commits yet" — you'll make the first one below
+```
+
+One thing to check: `git status` names your current branch, and it may say `master` rather than `main`. `uv init` uses whatever default branch name Git was configured with at the time — and in Module 1 you hadn't set `init.defaultBranch` yet (you just did, above, but that only affects repos created *from now on*). If yours says `master`, rename it once and move on:
+
+```bash
+git branch -m main      # rename the current branch to main; skip if git status already says main
 ```
 
 Because `uv init` already initialized the repo in Module 1, there's no `git init` to run here. (If you ever start a project *without* `uv`, `git init` is how you'd create the repo from scratch.) The default `.gitignore` from `uv init` already excludes `__pycache__/` and `.venv/`. (In Module 4, when we introduce `.env` for secrets, you'll see why this list matters — once a real API key lands in Git history, it's compromised forever, even if you delete it later.)

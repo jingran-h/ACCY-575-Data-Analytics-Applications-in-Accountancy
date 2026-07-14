@@ -58,7 +58,7 @@ The brief:
 > ) -> tuple["xgboost.XGBRegressor", pd.Series]:
 > ```
 >
-> Returns the fitted booster and predictions on `test`. Default params: `n_estimators=500`, `learning_rate=0.05`, `max_depth=5`, `early_stopping_rounds=20`, `eval_metric="rmse"`. Use `xgboost.XGBRegressor` (sklearn API). Pass all params (including `early_stopping_rounds` and `eval_metric`) to the **constructor** — XGBoost ≥ 2.1 removed them from `.fit()`. Provide an `eval_set=[(X_val, y_val)]` to `.fit()` so early stopping has something to monitor.
+> Returns the fitted booster and predictions on `test`. Default params: `n_estimators=500`, `learning_rate=0.05`, `max_depth=5`, `early_stopping_rounds=20`, `eval_metric="rmse"`. Use `xgboost.XGBRegressor` (sklearn API). Pass all params (including `early_stopping_rounds` and `eval_metric`) to the **constructor** — XGBoost ≥ 2.1 removed them from `.fit()`. Provide an `eval_set=[(X_val, y_val)]` to `.fit()` so early stopping has something to monitor — and carve that validation slice **from the end of `train`** (the last two training years, `fyear` 2019–2020), never from `test`. Early-stopping against the test set is itself a leak: you'd be tuning the number of trees on the rows you're grading yourself on.
 >
 > Then `notebooks/m10-gbm.ipynb`:
 >
@@ -88,7 +88,9 @@ The interesting cell is the comparison. You want a small table:
 | Model | Test RMSE | Test R² |
 |---|---|---|
 | OLS (M9 spec) | 0.083 | 0.12 |
-| GBM (default) | 0.071 | 0.27 |
+| GBM (default) | 0.071 | 0.36 |
+
+(The two columns are redundant given the same test set — $R^2 = 1 - \text{RMSE}^2 / \text{Var}(y_{\text{test}})$ — so check your own table for consistency: numbers that don't satisfy the identity mean the two models were scored on different rows.)
 
 If GBM is worse than OLS on the test set, that's a real result worth reporting. Your features, on this target, on this sample, don't contain non-linear signal worth capturing. Say so plainly.
 
